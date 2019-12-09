@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 using namespace std;
 
 class Book{
@@ -10,10 +10,15 @@ class Book{
         int categoryId;
         int numCopy;
 	public:
+		Book(int BookID, string name, string author, int categoryId, int numCopy);
 		friend ostream& operator << (ostream& out, const Book& book);
 };
 
 /*================Definition of Books=============*/
+
+Book::Book(int BookID, string name, string author, int categoryId, int numCopy):
+	BookID(BookID), name(name), author(author), categoryId(categoryId), numCopy(numCopy)
+{}
 
 ostream& operator << (ostream& out, const Book& book) {
 	out << "Book ID: " << book.BookID << "\n";
@@ -21,4 +26,5 @@ ostream& operator << (ostream& out, const Book& book) {
 	out << "Book's author: " << book.author << "\n";
 	out << "Category ID of book: " << book.categoryId << "\n";
 	out << "Num copy of book: " << book.numCopy << "\n";
+	return out;
 }
