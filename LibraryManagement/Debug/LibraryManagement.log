@@ -1,0 +1,7 @@
+﻿  LibraryManagement.cpp
+  main.cpp
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(55,23): error C2760: syntax error: unexpected token 'identifier', expected ';'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(55,23): error C2760: syntax error: unexpected token 'identifier', expected ';'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(25,16): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\main.cpp(18,20): warning C4018: '<': signed/unsigned mismatch

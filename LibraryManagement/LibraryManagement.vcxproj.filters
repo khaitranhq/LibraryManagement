@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{83d5fca8-a2b6-4b78-ae05-d2db233d5c75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{52e2a766-3277-43a0-a49c-a07c26e00931}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LibraryManagement.cpp">
@@ -46,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="Object\Student.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseConnect.h">
+      <Filter>Header Files\Database</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

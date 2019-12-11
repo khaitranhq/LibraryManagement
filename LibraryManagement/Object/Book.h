@@ -10,6 +10,7 @@ class Book{
         int categoryId;
         int numCopy;
 	public:
+		Book(){}
 		Book(int BookID, string name, string author, int categoryId, int numCopy);
 		friend ostream& operator << (ostream& out, const Book& book);
 };
