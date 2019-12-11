@@ -18,30 +18,48 @@
 #define SQL_RETURN_CODE_LEN 1000
 using namespace std;
 
+std::wstring s2ws(const std::string &s)
+{
+	int len;
+	int slength = (int)s.length() + 1;
+	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+	wchar_t *buf = new wchar_t[len];
+	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+	std::wstring r(buf);
+	delete[] buf;
+	return r;
+}
+
 string toString(char a[])
 {
 	string s(a);
 	return s;
 }
 
-class DatabaseConnect {
+class DatabaseConnect
+{
 	//define handles and variables
 	SQLHANDLE sqlConnHandle;
 	SQLHANDLE sqlStmtHandle;
 	SQLHANDLE sqlEnvHandle;
 	SQLWCHAR retconstring[SQL_RETURN_CODE_LEN];
 
-	public:
-		DatabaseConnect();
-		Vector<Book> getBook();
-		Vector<Category> getCategory();
-		Vector<Slip> getSlip();
-		Vector<Student> getStudent();
-		void close();
+public:
+	DatabaseConnect();
+	Vector<Book> getBook();
+	Vector<Category> getCategory();
+	Vector<Slip> getSlip();
+	Vector<Student> getStudent();
+
+	void show_error(unsigned int handletype, const SQLHANDLE &handle);
+
+	void insert(const Slip &slip);
+	void close();
 };
 
 /*=================Definition of class==============*/
-DatabaseConnect::DatabaseConnect() {
+DatabaseConnect::DatabaseConnect()
+{
 	//initializations
 	sqlConnHandle = NULL;
 	sqlStmtHandle = NULL;
@@ -67,14 +85,15 @@ DatabaseConnect::DatabaseConnect() {
 	//You have the option to use a username/password instead of a trusted connection
 	//but is more secure to use a trusted connection
 	switch (SQLDriverConnect(sqlConnHandle,
-		NULL,
-		(SQLWCHAR*)L"DRIVER={SQL Server};SERVER=DESKTOP-TOMPGGO;DATABASE=Lib_Management;",
-		//(SQLWCHAR*)L"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=master;Trusted=true;",
-		SQL_NTS,
-		retconstring,
-		1024,
-		NULL,
-		SQL_DRIVER_NOPROMPT)) {
+							 NULL,
+							 (SQLWCHAR *)L"DRIVER={SQL Server};SERVER=DESKTOP-TOMPGGO;DATABASE=Lib_Management;",
+							 //(SQLWCHAR*)L"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=master;Trusted=true;",
+							 SQL_NTS,
+							 retconstring,
+							 1024,
+							 NULL,
+							 SQL_DRIVER_NOPROMPT))
+	{
 
 	case SQL_SUCCESS:
 		std::cout << "Successfully connected to SQL Server1";
@@ -105,22 +124,26 @@ DatabaseConnect::DatabaseConnect() {
 		close();
 }
 
-Vector<Book> DatabaseConnect::getBook() {
+Vector<Book> DatabaseConnect::getBook()
+{
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
-	
+
 	Vector<Book> ans;
-	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Books", SQL_NTS)) {
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Books", SQL_NTS))
+	{
 		cout << "Error querying SQL Server";
 		cout << "\n";
 		close();
 	}
-	else {
+	else
+	{
 		int id, categoryID, numCopy;
 		char name[50];
 		char author[50];
-		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
+		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+		{
 			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 3, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_CHAR, &name, 50, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &author, 50, NULL);
@@ -132,22 +155,26 @@ Vector<Book> DatabaseConnect::getBook() {
 	return ans;
 }
 
-Vector<Category> DatabaseConnect::getCategory() {
+Vector<Category> DatabaseConnect::getCategory()
+{
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
 	Vector<Category> ans;
-	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Categoriess", SQL_NTS)) {
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Categoriess", SQL_NTS))
+	{
 		cout << "Error querying SQL Server";
 		cout << "\n";
 		close();
 	}
-	else {
+	else
+	{
 		int id;
 		char name[50];
 		char moreInfo[100];
-		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
+		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+		{
 			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 3, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_CHAR, &name, 50, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &moreInfo, 100, NULL);
@@ -184,34 +211,75 @@ Vector<Category> DatabaseConnect::getCategory() {
 	return ans;
 }*/
 
-Vector<Student> DatabaseConnect::getStudent() {
+Vector<Student> DatabaseConnect::getStudent()
+{
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
 	Vector<Student> ans;
-	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Books", SQL_NTS)) {
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Books", SQL_NTS))
+	{
 		cout << "Error querying SQL Server";
 		cout << "\n";
 		close();
 	}
-	else {
+	else
+	{
 		int id;
 		char name[50];
 		char address[50];
 		char tel[10];
-		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
+		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+		{
 			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 3, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_CHAR, &name, 50, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &address, 50, NULL);
 			SQLGetData(sqlStmtHandle, 4, SQL_C_LONG, &tel, 10, NULL);
-			ans.push_back(Student(id, toString(name), toString(address), toString(tel));
+			ans.push_back(Student(id, toString(name), toString(address), toString(tel)));
 		}
 	}
 	return ans;
 }
 
-void DatabaseConnect::close() {
+void DatabaseConnect::show_error(unsigned int handletype, const SQLHANDLE &handle)
+{
+	SQLWCHAR sqlstate[1024];
+	SQLWCHAR message[1024];
+	if (SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL))
+		std::wcout << L"Message: " << message << L"\nSQLSTATE: " << sqlstate << std::endl;
+}
+
+void DatabaseConnect::insert(const Slip& slip)
+{
+	int UserID;
+	int BookID;
+addSlipAgain:
+	cout << " Moi nhap ID nguoi dung can muon : ";
+	cin >> UserID;
+	cout << " Moi nhap ID cuon sach nguoi dung can muon : ";
+	cin >> BookID;
+
+	// EXEC addSlip @SlipID = 30020 , @UserID=2009, @BookID = 142;
+	string str = "EXEC addSlip  @UserID =" + to_string(UserID) + ",@BookID =" + to_string(BookID) + ";";
+	wstring a = s2ws(str);
+	LPCWSTR result = a.c_str();
+	while (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)result, SQL_NTS))
+	{
+		int choice;
+		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+		cout << " ban co muon nhap lai thong tin khong ? (1.CO \t 2.KHONG ) " << endl;
+		cout << " moi nhap lua chon cua ban :  ";
+		cin >> choice;
+		if (choice == 1)
+			goto addSlipAgain;
+		else
+			goto here4;
+	}
+}
+
+void DatabaseConnect::close()
+{
 	SQLFreeHandle(SQL_HANDLE_STMT, sqlStmtHandle);
 	SQLDisconnect(sqlConnHandle);
 	SQLFreeHandle(SQL_HANDLE_DBC, sqlConnHandle);

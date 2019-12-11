@@ -31,7 +31,7 @@ CREATE TABLE dbo.Slip (
     DateBorrow DATETIME,
     DateReturn DATETIME NULL,
     "Status" INT,
-    FOREIGN KEY (BookID) REFERENCES dbo.Books(BookID),
+    --FOREIGN KEY (BookID) REFERENCES dbo.Books(BookID),
     FOREIGN KEY (UserID) REFERENCES dbo.Students(UserID)
 );
 CREATE TABLE dbo.Book_has_Slip(

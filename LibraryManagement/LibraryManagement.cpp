@@ -8,7 +8,7 @@
 #include "Object/Slip.h"
 #include "Object/Student.h"
 
-#include "DatabaseConnect.h"
+//#include "DatabaseConnect.h"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ Vector<Slip> slips;
 Vector<Student> students;
 
 int main() {
-	DatabaseConnect DB;
+	//DatabaseConnect DB;
 
 
 	return 0;
