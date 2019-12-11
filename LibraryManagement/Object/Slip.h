@@ -9,6 +9,7 @@ private:
     int day, month, year;
 
 public:
+	Date(){}
     Date(int day, int month, int year);
     friend ostream &operator<<(ostream &dout, const Date &date);
 };
@@ -23,6 +24,7 @@ private:
     bool status;
 
 public:
+	Slip(){}
     Slip(int slipID, int userID, Date dateStart, Date dateEnd, bool status);
     void addBook(Book* books);
     friend ostream &operator<<(ostream &out, const Slip &slip);
@@ -40,12 +42,14 @@ ostream &operator<<(ostream &out, const Slip &slip)
     out << "Date Start: " << slip.dateStart << "\n";
     out << "Date End: " << slip.dateEnd << "\n";
     out << "Status: " << slip.status << "\n";
+	return out;
 }
 ostream &operator<<(ostream &dout, const Date &date)
 {
     dout << "Day: " << date.day << "\n";
     dout << "Month: " << date.month << "\n";
     dout << "Year : " << date.year << "\n";
+	return dout;
 }
 void Slip::addBook(Book* book)
 {

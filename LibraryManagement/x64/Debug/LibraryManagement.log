@@ -1,29 +1,28 @@
 ﻿  LibraryManagement.cpp
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(18,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(40,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message : while compiling class template member function 'void Vector<Slip *>::push_back(T)'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :             T=Slip *
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Student.h(35): message : see reference to function template instantiation 'void Vector<Slip *>::push_back(T)' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Student.h(35): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Student.h(35): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Student.h(35): message :             T=Slip *
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Student.h(35): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Student.h(10): message : see reference to class template instantiation 'Vector<Slip *>' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(25,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(20): message : while compiling class template member function 'Vector<Book *>::Vector(const Vector<Book *> &)'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Slip.h(34): message : see reference to function template instantiation 'Vector<Book *>::Vector(const Vector<Book *> &)' being compiled
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(52,13): warning C4018: '>=': signed/unsigned mismatch
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(51): message : while compiling class template member function 'T &Vector<T>::operator [](int) const'
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(51): message :         with
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(51): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(51): message :             T=Book
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(51): message :             T=Slip *
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(51): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19): message : see reference to function template instantiation 'T &Vector<T>::operator [](int) const' being compiled
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(108): message : see reference to class template instantiation 'Vector<Book>' being compiled
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(40,2): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message : while compiling class template member function 'void Vector<Book>::push_back(T)'
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(33): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(129): message : see reference to function template instantiation 'void Vector<Book>::push_back(T)' being compiled
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(129): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(129): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(129): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(129): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(25,2): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(20): message : while compiling class template member function 'Vector<Book>::Vector(const Vector<Book> &)'
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\DatabaseConnect.h(132): message : see reference to function template instantiation 'Vector<Book>::Vector(const Vector<Book> &)' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(41): message : see reference to function template instantiation 'T &Vector<T>::operator [](int) const' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(41): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(41): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(41): message :             T=Slip *
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Vector.h(41): message :         ]
   LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe

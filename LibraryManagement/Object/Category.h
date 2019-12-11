@@ -14,6 +14,7 @@ private:
 	string moreInfo;
 
 public:
+	Category(){}
 	Category(int categoryID, string categoryName, string moreInfo);
 	void addBook(Book* book);
 	friend ostream &operator<<(ostream &out, const Category &category);
@@ -26,6 +27,7 @@ ostream& operator<<(ostream &out, const Category &category)
 	out << "Category ID: " << category.categoryID << "\n";
 	out << "Category Name: " << category.categoryName << "\n";
 	out << "Category Info: " << category.moreInfo << "\n";
+	return out;
 }
 void Category::addBook(Book *book)
 {
