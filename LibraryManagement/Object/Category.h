@@ -14,3 +14,5 @@ class Category{
 	public:
 		friend ostream& operator << (ostream& out, const Category& category);
 };
+
+//
