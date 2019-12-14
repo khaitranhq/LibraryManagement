@@ -10,10 +10,13 @@
 #include "Object/Student.h"*/
 
 #include "DatabaseConnect.h"
-
 #include "Functions/Functions.h"
-
 using namespace std;
+
+const int MAX = 1e6 + 5;
+
+Category* refCategory[MAX];
+Book* refBook[MAX];
 
 vector<Category*> categories;
 vector<Book*> books;
@@ -35,23 +38,33 @@ void show_menu()
 }
 
 void InitBook() {
-	for (int i = 0; i < books.size(); ++i)
+	for (int i = 0; i < books.size(); ++i) 
 		bookTree.insert(books[i] -> getName(), books[i]);
 }
 
 void InitCategory() {
-	for (int i = 0; i < categories.size(); ++i)
+	for (int i = 0; i < categories.size(); ++i) {
 		categoryTree.insert(categories[i]->getName(), categories[i]);
+		refCategory[categories[i]->getID()] = categories[i];
+	}
+
+	for (int i = 0; i < books.size(); ++i) {
+		int categoryID = books[i]->getCategoryID();
+		Category* category = refCategory[categoryID];
+		category->addBook(books[i]);
+	}
 }
 
 int main() {
-	Category* category = new Category(5, "leo", "aslan");
-	categories.push_back(category);
-
+	DatabaseConnect DB;
+	DB.init();
+	
+	categories = DB.getCategory();
+	books = DB.getBook();
 
 	InitBook();
+	return 0;
 	InitCategory();
-
 	int question;
 	show_menu();
 	cin >> question;
@@ -84,5 +97,7 @@ int main() {
 			}
 		}
 	}
+
+	DB.close();
 	return 0;
 }

@@ -14,6 +14,7 @@ class Book{
 		Book(){}
 		Book(int BookID, string name, string author, int categoryId, int numCopy);
 
+		int getCategoryID();
 		string getName();
 
 		friend ostream& operator << (ostream& out, const Book& book);
@@ -26,6 +27,7 @@ Book::Book(int BookID, string name, string author, int categoryId, int numCopy):
 {
 }
 
+int Book::getCategoryID() { return this->categoryId;  }
 string Book::getName(){ return this -> name; }
 
 ostream& operator << (ostream& out, const Book& book) {

@@ -46,9 +46,11 @@ class DatabaseConnect
 	SQLWCHAR retconstring[SQL_RETURN_CODE_LEN];
 
 public:
-	DatabaseConnect();
+	~DatabaseConnect();
+
+	void init();
 	vector<Book*> getBook();
-	vector<Category> getCategory();
+	vector<Category*> getCategory();
 	vector<Slip> getSlip();
 	vector<Student> getStudent();
 
@@ -59,7 +61,9 @@ public:
 };
 
 /*=================Definition of class==============*/
-DatabaseConnect::DatabaseConnect()
+DatabaseConnect::~DatabaseConnect() {close();}
+
+void DatabaseConnect::init()
 {
 	//initializations
 	sqlConnHandle = NULL;
@@ -154,17 +158,19 @@ vector<Book*> DatabaseConnect::getBook()
 			ans.push_back(book);
 		}
 	}
+	close();
+	init();
 	return ans;
 }
 
-vector<Category> DatabaseConnect::getCategory()
+vector<Category*> DatabaseConnect::getCategory()
 {
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
-	vector<Category> ans;
-	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Categoriess", SQL_NTS))
+	vector<Category*> ans;
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Categories", SQL_NTS))
 	{
 		cout << "Error querying SQL Server";
 		cout << "\n";
@@ -180,9 +186,13 @@ vector<Category> DatabaseConnect::getCategory()
 			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 3, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_CHAR, &name, 50, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &moreInfo, 100, NULL);
-			ans.push_back(Category(id, toString(name), toString(moreInfo)));
+			Category* category = new Category(id, toString(name), toString(moreInfo));
+			ans.push_back(category);
 		}
 	}
+	
+	close();
+	init();
 	return ans;
 }
 
@@ -304,6 +314,4 @@ void DatabaseConnect::close()
 	SQLDisconnect(sqlConnHandle);
 	SQLFreeHandle(SQL_HANDLE_DBC, sqlConnHandle);
 	SQLFreeHandle(SQL_HANDLE_ENV, sqlEnvHandle);
-	getchar();
-	exit(0);
 }

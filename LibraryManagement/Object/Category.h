@@ -20,6 +20,7 @@ class Category
 		Category(){}
 		Category(int categoryID, string categoryName, string moreInfo);
 
+		int getID();
 		string getName();
 		void addBook(Book* book);
 		vector<Book*> getBooks();
@@ -39,6 +40,7 @@ ostream& operator<<(ostream &out, const Category &category)
 	return out;
 }
 
+int Category::getID() { return this->categoryID; }
 string Category::getName() { return this->categoryName; }
 
 void Category::addBook(Book *book) { books.push_back(book); }
