@@ -158,9 +158,8 @@ vector<Book*> DatabaseConnect::getBook()
 			ans.push_back(book);
 		}
 	}
-	close();
-	init();
 	return ans;
+	SQLCloseCursor(sqlStmtHandle);
 }
 
 vector<Category*> DatabaseConnect::getCategory()
@@ -190,10 +189,8 @@ vector<Category*> DatabaseConnect::getCategory()
 			ans.push_back(category);
 		}
 	}
-	
-	close();
-	init();
 	return ans;
+	SQLCloseCursor(sqlStmtHandle);
 }
 
 /*vector<Slip> DatabaseConnect::getSlip() {
@@ -221,6 +218,7 @@ vector<Category*> DatabaseConnect::getCategory()
 		}
 	}
 	return ans;
+	SQLCloseCursor(sqlStmtHandle);
 }*/
 
 vector<Student> DatabaseConnect::getStudent()
@@ -252,6 +250,7 @@ vector<Student> DatabaseConnect::getStudent()
 		}
 	}
 	return ans;
+	SQLCloseCursor(sqlStmtHandle);
 }
 
 void DatabaseConnect::show_error(unsigned int handletype, const SQLHANDLE &handle)
@@ -283,10 +282,10 @@ void DatabaseConnect::show_error(unsigned int handletype, const SQLHANDLE &handl
 	if (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
 	{
 		int SlipID, BookID;
-		cout << " Mời nhập chi tiết hóa đơn có ID " << SlipID << " : ";
+		cout << " Bat dau nhap chi tiet hoa don " << SlipID << " : ";
 		for (int i = 0; i < number; i++)
 		{
-			cout << " Mời nhập ID cuốn sách người dùng mượn  : ";
+			cout << "Moi nhap ID cuon sach muon : ";
 			cin >> BookID;
 			// thêm vào DB
 			string str1 = " EXEC add_Slip_Detail @SlipID = " + to_string(SlipID) + ",@BookID=" + to_string(BookID);
@@ -304,6 +303,8 @@ void DatabaseConnect::show_error(unsigned int handletype, const SQLHANDLE &handl
 		}
 		cout << " Them hoa don thanh cong " << endl;
 	}
+	SQLCloseCursor(sqlStmtHandle);
+}
 here4: break;
 
 }*/

@@ -1,15 +1,15 @@
 ﻿  LibraryManagement.cpp
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(16,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(42,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message : while compiling class template member function 'void Trie<Book>::insert(const std::string &,T *)'
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message : see reference to function template instantiation 'void Trie<Book>::insert(const std::string &,T *)' being compiled
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(25): message : see reference to class template instantiation 'Trie<Book>' being compiled
-  LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe
+C:\Users\PC\Documents\GitHub\yua2307\LibraryManagement\LibraryManagement\LibraryManagement.cpp(16,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Documents\GitHub\yua2307\LibraryManagement\LibraryManagement\Container\Trie.h(42,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\PC\Documents\GitHub\yua2307\LibraryManagement\LibraryManagement\Container\Trie.h(35): message : while compiling class template member function 'void Trie<Book>::insert(const std::string &,T *)'
+          with
+          [
+              T=Book
+          ]
+C:\Users\PC\Documents\GitHub\yua2307\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message : see reference to function template instantiation 'void Trie<Book>::insert(const std::string &,T *)' being compiled
+          with
+          [
+              T=Book
+          ]
+C:\Users\PC\Documents\GitHub\yua2307\LibraryManagement\LibraryManagement\LibraryManagement.cpp(25): message : see reference to class template instantiation 'Trie<Book>' being compiled
+  LibraryManagement.vcxproj -> C:\Users\PC\Documents\GitHub\yua2307\LibraryManagement\x64\Debug\LibraryManagement.exe
