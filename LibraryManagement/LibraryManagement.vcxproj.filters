@@ -22,6 +22,9 @@
     <Filter Include="Header Files\Database">
       <UniqueIdentifier>{52e2a766-3277-43a0-a49c-a07c26e00931}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Functions">
+      <UniqueIdentifier>{d152d9f6-cd70-44f3-b4ba-611788d5cbc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LibraryManagement.cpp">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Object\ItemDetail.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Functions.h">
+      <Filter>Header Files\Functions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,10 +33,9 @@ template <typename T> Trie<T>::Trie(){
 }
 
 template <typename T> void Trie<T>::insert(const string& s, T* obj){
-	cout << *obj << endl;
-	return;
     int cur = 0;
     for(int i = 0 ; i < s.size() ; ++i) {
+		if (s[i] == ' ') continue;
         int j = s[i] - 'A';
         if (Tree[cur].next[j] == -1){
             Tree.push_back(Node());

@@ -11,13 +11,14 @@
 
 #include "DatabaseConnect.h"
 
+#include "Functions/Functions.h"
+
 using namespace std;
 
 //vector<Category> categories;
 vector<Book*> books;
 //vector<Slip> slips;
 //vector<Student> students;
-
 Trie<Book> bookTree;
 
 void show_menu()
@@ -34,19 +35,18 @@ void show_menu()
 
 void InitBook() {
 
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < books.size(); ++i)
 		bookTree.insert(books[i] -> getName(), books[i]);
 }
 
 int main() {
-	DatabaseConnect DB;
+	Book* book = new Book(1, "leo", "aslan", 5, 5);
 
-	books = DB.getBook();
+	books.push_back(book);
 
 
 	InitBook();
 
-	return 0;
 	int question;
 	show_menu();
 	cin >> question;
@@ -57,10 +57,20 @@ int main() {
 			string name;
 			cout << "Nhap ten sach: ";
 			cin >> name;
-			vector<Book*> ans = bookTree.query(name);
+			vector<Book*> ans = bookTree.query(toUpper(name));
+
+			cout << "Cac sach tim duoc theo ten: " << endl;
 			for (int i = 0; i < ans.size(); ++i)
 				cout << *ans[i] << endl;
 			break;
+		}
+
+		case 2: {
+			string name;
+			cout << "Nhap ten danh muc: ";
+			cin >> name;
+
+			vector<Book*> ans = 
 		}
 	}
 	return 0;

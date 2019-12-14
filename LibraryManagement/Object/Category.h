@@ -8,17 +8,18 @@ using namespace std;
 
 class Category
 {
-private:
-	int categoryID;
-	vector<Book *> books;
-	string categoryName;
-	string moreInfo;
+	private:
+		int categoryID;
+		vector<Book *> books;
+		string categoryName;
+		string moreInfo;
 
-public:
-	Category(){}
-	Category(int categoryID, string categoryName, string moreInfo);
-	void addBook(Book* book);
-	friend ostream &operator<<(ostream &out, const Category &category);
+	public:
+		Category(){}
+		Category(int categoryID, string categoryName, string moreInfo);
+		void addBook(Book* book);
+		vector<Book*> getBooks();
+		friend ostream &operator<<(ostream &out, const Category &category);
 };
 
 Category::Category(int categoryID, string categoryName, string moreInfo) : categoryID(categoryID), categoryName(categoryName), moreInfo(moreInfo) {}
@@ -34,4 +35,7 @@ void Category::addBook(Book *book)
 {
 	books.push_back(book);
 }
-//
+
+vector<Book*> Category::getBooks() {
+	return this->books;
+}

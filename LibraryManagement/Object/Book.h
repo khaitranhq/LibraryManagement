@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "../Functions/Functions.h"
 using namespace std;
 
 class Book{
@@ -21,8 +22,9 @@ class Book{
 /*================Definition of Books=============*/
 
 Book::Book(int BookID, string name, string author, int categoryId, int numCopy):
-	BookID(BookID), name(name), author(author), categoryId(categoryId), numCopy(numCopy)
-{}
+	BookID(BookID), name(toUpper(name)), author(toUpper(author)), categoryId(categoryId), numCopy(numCopy)
+{
+}
 
 string Book::getName(){ return this -> name; }
 
