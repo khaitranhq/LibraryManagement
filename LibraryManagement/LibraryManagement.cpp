@@ -15,11 +15,12 @@
 
 using namespace std;
 
-//vector<Category> categories;
+vector<Category*> categories;
 vector<Book*> books;
 //vector<Slip> slips;
 //vector<Student> students;
 Trie<Book> bookTree;
+Trie<Category> categoryTree;
 
 void show_menu()
 {
@@ -34,18 +35,22 @@ void show_menu()
 }
 
 void InitBook() {
-
 	for (int i = 0; i < books.size(); ++i)
 		bookTree.insert(books[i] -> getName(), books[i]);
 }
 
-int main() {
-	Book* book = new Book(1, "leo", "aslan", 5, 5);
+void InitCategory() {
+	for (int i = 0; i < categories.size(); ++i)
+		categoryTree.insert(categories[i]->getName(), categories[i]);
+}
 
-	books.push_back(book);
+int main() {
+	Category* category = new Category(5, "leo", "aslan");
+	categories.push_back(category);
 
 
 	InitBook();
+	InitCategory();
 
 	int question;
 	show_menu();
@@ -70,7 +75,13 @@ int main() {
 			cout << "Nhap ten danh muc: ";
 			cin >> name;
 
-			vector<Book*> ans = 
+			cout << "Cac sach co trong danh muc: " << endl;
+			vector<Category*> ansCategory = categoryTree.query(toUpper(name));
+			for (int i = 0; i < ansCategory.size(); ++i) {
+				vector<Book*> ansBook = ansCategory[i]->getBooks();
+				for (int j = 0; j < ansBook.size(); ++j)
+					cout << ansBook[j] << endl;
+			}
 		}
 	}
 	return 0;

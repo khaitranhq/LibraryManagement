@@ -4,6 +4,8 @@
 //#include "../Container/vector.h"
 #include <vector>
 #include "Book.h"
+
+#include "../Functions/Functions.h"
 using namespace std;
 
 class Category
@@ -17,12 +19,17 @@ class Category
 	public:
 		Category(){}
 		Category(int categoryID, string categoryName, string moreInfo);
+
+		string getName();
 		void addBook(Book* book);
 		vector<Book*> getBooks();
+
 		friend ostream &operator<<(ostream &out, const Category &category);
 };
 
-Category::Category(int categoryID, string categoryName, string moreInfo) : categoryID(categoryID), categoryName(categoryName), moreInfo(moreInfo) {}
+Category::Category(int categoryID, string categoryName, string moreInfo) : 
+	categoryID(categoryID), categoryName(toUpper(categoryName)), moreInfo(toUpper(moreInfo)) 
+{}
 
 ostream& operator<<(ostream &out, const Category &category)
 {
@@ -31,11 +38,9 @@ ostream& operator<<(ostream &out, const Category &category)
 	out << "Category Info: " << category.moreInfo << "\n";
 	return out;
 }
-void Category::addBook(Book *book)
-{
-	books.push_back(book);
-}
 
-vector<Book*> Category::getBooks() {
-	return this->books;
-}
+string Category::getName() { return this->categoryName; }
+
+void Category::addBook(Book *book) { books.push_back(book); }
+
+vector<Book*> Category::getBooks() { return this->books; }
