@@ -158,8 +158,8 @@ vector<Book*> DatabaseConnect::getBook()
 			ans.push_back(book);
 		}
 	}
-	return ans;
 	SQLCloseCursor(sqlStmtHandle);
+	return ans;
 }
 
 vector<Category*> DatabaseConnect::getCategory()
@@ -189,8 +189,8 @@ vector<Category*> DatabaseConnect::getCategory()
 			ans.push_back(category);
 		}
 	}
-	return ans;
 	SQLCloseCursor(sqlStmtHandle);
+	return ans;
 }
 
 /*vector<Slip> DatabaseConnect::getSlip() {
