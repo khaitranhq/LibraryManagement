@@ -1,57 +1,46 @@
 #pragma once
 
 #include "Book.h"
-#include "../Container/Vector.h"
-
-class Date
-{
-private:
-    int day, month, year;
-
-public:
-	Date(){}
-    Date(int day, int month, int year);
-    friend ostream &operator<<(ostream &dout, const Date &date);
-};
+#include "ItemDetail.h"
+//#include "../Container/Vector.h"
+#include <vector>
+using namespace std;
 
 class Slip
 {
 private:
     int slipID;
-    Vector<Book*> books;
+    vector<ItemDetail> items;
     int userID;
-    Date dateStart, dateEnd;
-    bool status;
 
 public:
 	Slip(){}
-    Slip(int slipID, int userID, Date dateStart, Date dateEnd, bool status);
-    void addBook(Book* books);
+    Slip(int slipID, int userID);
+
+    void addItem(ItemDetail item);
+	int getUserID();
+	int getNumberItems();
+
     friend ostream &operator<<(ostream &out, const Slip &slip);
 };
-/*================*/
 
-Slip::Slip(int slipID, int userID, Date dateStart, Date dateEnd, bool status) : slipID(slipID), books(books), userID(userID), dateStart(dateStart), dateEnd(dateEnd), status(status)
-{
-}
-Date::Date(int day, int month, int year) : day(day), month(month), year(year) {}
+/*==================Definition of Slip=================*/
+
+Slip::Slip(int slipID, int userID) :
+	slipID(slipID), userID(userID)
+{}
+
+void Slip::addItem(ItemDetail item){ items.push_back(item); }
+int Slip::getUserID() { return userID; }
+int Slip::getNumberItems() { return (int) items.size(); }
+
 ostream &operator<<(ostream &out, const Slip &slip)
 {
     out << "slip ID: " << slip.slipID << "\n";
     out << "User ID: " << slip.userID << "\n";
-    out << "Date Start: " << slip.dateStart << "\n";
-    out << "Date End: " << slip.dateEnd << "\n";
-    out << "Status: " << slip.status << "\n";
+	out << "List of book: " << '\n';
+	for(int i = 0 ; i < slip.items.size() ; ++i){
+		out << slip.items[i] << endl;
+	}
 	return out;
-}
-ostream &operator<<(ostream &dout, const Date &date)
-{
-    dout << "Day: " << date.day << "\n";
-    dout << "Month: " << date.month << "\n";
-    dout << "Year : " << date.year << "\n";
-	return dout;
-}
-void Slip::addBook(Book* book)
-{
-    books.push_back(book);
 }

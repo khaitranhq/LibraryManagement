@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <windows.h>
 #include <sqlext.h>
@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <string>
 
-#include "Container/Vector.h"
+//#include "Container/vector.h"
+#include <vector>
 
 #include "Object/Book.h"
 #include "Object/Category.h"
@@ -46,10 +47,10 @@ class DatabaseConnect
 
 public:
 	DatabaseConnect();
-	Vector<Book> getBook();
-	Vector<Category> getCategory();
-	Vector<Slip> getSlip();
-	Vector<Student> getStudent();
+	vector<Book*> getBook();
+	vector<Category> getCategory();
+	vector<Slip> getSlip();
+	vector<Student> getStudent();
 
 	void show_error(unsigned int handletype, const SQLHANDLE &handle);
 
@@ -86,7 +87,7 @@ DatabaseConnect::DatabaseConnect()
 	//but is more secure to use a trusted connection
 	switch (SQLDriverConnect(sqlConnHandle,
 							 NULL,
-							 (SQLWCHAR *)L"DRIVER={SQL Server};SERVER=DESKTOP-TOMPGGO;DATABASE=Lib_Management;",
+							 (SQLWCHAR *)L"DRIVER={SQL Server};SERVER=DESKTOP-TOMPGGO;DATABASE=Lib_Management_Final;",
 							 //(SQLWCHAR*)L"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=master;Trusted=true;",
 							 SQL_NTS,
 							 retconstring,
@@ -124,13 +125,13 @@ DatabaseConnect::DatabaseConnect()
 		close();
 }
 
-Vector<Book> DatabaseConnect::getBook()
+vector<Book*> DatabaseConnect::getBook()
 {
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
-	Vector<Book> ans;
+	vector<Book*> ans;
 	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Books", SQL_NTS))
 	{
 		cout << "Error querying SQL Server";
@@ -149,19 +150,20 @@ Vector<Book> DatabaseConnect::getBook()
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &author, 50, NULL);
 			SQLGetData(sqlStmtHandle, 4, SQL_C_LONG, &categoryID, 2, NULL);
 			SQLGetData(sqlStmtHandle, 5, SQL_C_LONG, &numCopy, 2, NULL);
-			ans.push_back(Book(id, toString(name), toString(author), categoryID, numCopy));
+			Book *book = new Book(id, toString(name), toString(author), categoryID, numCopy);
+			ans.push_back(book);
 		}
 	}
 	return ans;
 }
 
-Vector<Category> DatabaseConnect::getCategory()
+vector<Category> DatabaseConnect::getCategory()
 {
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
-	Vector<Category> ans;
+	vector<Category> ans;
 	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Categoriess", SQL_NTS))
 	{
 		cout << "Error querying SQL Server";
@@ -184,12 +186,12 @@ Vector<Category> DatabaseConnect::getCategory()
 	return ans;
 }
 
-/*Vector<Slip> DatabaseConnect::getSlip() {
+/*vector<Slip> DatabaseConnect::getSlip() {
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
-	Vector<Slip> ans;
+	vector<Slip> ans;
 	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Slip", SQL_NTS)) {
 		cout << "Error querying SQL Server";
 		cout << "\n";
@@ -211,13 +213,13 @@ Vector<Category> DatabaseConnect::getCategory()
 	return ans;
 }*/
 
-Vector<Student> DatabaseConnect::getStudent()
+vector<Student> DatabaseConnect::getStudent()
 {
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
-	Vector<Student> ans;
+	vector<Student> ans;
 	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Books", SQL_NTS))
 	{
 		cout << "Error querying SQL Server";
@@ -250,21 +252,12 @@ void DatabaseConnect::show_error(unsigned int handletype, const SQLHANDLE &handl
 		std::wcout << L"Message: " << message << L"\nSQLSTATE: " << sqlstate << std::endl;
 }
 
-void DatabaseConnect::insert(const Slip& slip)
+/*void DatabaseConnect::insert(const Slip& slip)
 {
-	int UserID;
-	int BookID;
-addSlipAgain:
-	cout << " Moi nhap ID nguoi dung can muon : ";
-	cin >> UserID;
-	cout << " Moi nhap ID cuon sach nguoi dung can muon : ";
-	cin >> BookID;
-
-	// EXEC addSlip @SlipID = 30020 , @UserID=2009, @BookID = 142;
-	string str = "EXEC addSlip  @UserID =" + to_string(UserID) + ",@BookID =" + to_string(BookID) + ";";
+	string str = "EXEC addSlip  @UserID =" + to_string(slip.getUserID()) + ",@Number_Book_Borrow =" + to_string(slip.getNumberBooks) + ";";
 	wstring a = s2ws(str);
 	LPCWSTR result = a.c_str();
-	while (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)result, SQL_NTS))
+	while (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
 	{
 		int choice;
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
@@ -276,7 +269,34 @@ addSlipAgain:
 		else
 			goto here4;
 	}
-}
+
+	if (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+	{
+		int SlipID, BookID;
+		cout << " Mời nhập chi tiết hóa đơn có ID " << SlipID << " : ";
+		for (int i = 0; i < number; i++)
+		{
+			cout << " Mời nhập ID cuốn sách người dùng mượn  : ";
+			cin >> BookID;
+			// thêm vào DB
+			string str1 = " EXEC add_Slip_Detail @SlipID = " + to_string(SlipID) + ",@BookID=" + to_string(BookID);
+			wstring b = s2ws(str1);
+			LPCWSTR result1 = b.c_str();
+			if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
+			{
+				show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+			}
+			else
+			{
+				// gọi constructor slip_detail
+				cout << " Thêm chi tiết hóa đơn thành công  !!!!";
+			}
+		}
+		cout << " Them hoa don thanh cong " << endl;
+	}
+here4: break;
+
+}*/
 
 void DatabaseConnect::close()
 {

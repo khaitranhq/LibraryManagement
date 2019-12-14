@@ -1,38 +1,40 @@
 #pragma once
 #include <string>
 #include <cstring>
-#include "Vector.h"
+//#include "vector.h"
+#include <vector>
 #include "Queue.h"
 using namespace std;
 
-template <class T> class Trie{
+template <typename T> class Trie{
     private:
-        class Node{
-            private:
-                T obj;
-                int next[26];
-                bool isLeaf;
-            public:
-                Node(){
-                    memset(next, -1, sizeof(next));
-                    isLeaf = 0;
-                }
-        };
+		struct Node {
+			T* obj;
+			int next[26];
+			bool isLeaf;
 
-        Vector<Node> Tree;
+			Node() {
+				memset(next, -1, sizeof(next));
+				isLeaf = 0;
+			}
+		};
+
+		vector<Node> Tree;
     public:
         Trie();
-        void insert(const string& s, const T& obj); //Insert a string into Trie Tree
-        Vector<T> query(const string& s); //Return list of object
+        void insert(const string& s, T* obj); //Insert a string into Trie Tree
+        vector<T*> query(const string& s); //Return list of object
 };
 
 /*===========Definition of Trie Class==============*/
 
-template <class T> Trie<T>::Trie(){
+template <typename T> Trie<T>::Trie(){
     Tree.push_back(Node());
 }
 
-template <class T> void Trie<T>::insert(const string& s, const T& obj){
+template <typename T> void Trie<T>::insert(const string& s, T* obj){
+	cout << *obj << endl;
+	return;
     int cur = 0;
     for(int i = 0 ; i < s.size() ; ++i) {
         int j = s[i] - 'A';
@@ -46,8 +48,8 @@ template <class T> void Trie<T>::insert(const string& s, const T& obj){
     Tree[cur].obj = obj;
 }
 
-template <class T> Vector<T> Trie<T>::query(const string &s){
-    Vector<T> ans;
+template <typename T> vector<T*> Trie<T>::query(const string &s){
+    vector<T*> ans;
     int cur = 0;
     for(int i = 0 ; i < s.size() ; ++i){
         int j = s[i] - 'A';

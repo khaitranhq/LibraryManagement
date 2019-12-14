@@ -12,6 +12,9 @@ class Book{
 	public:
 		Book(){}
 		Book(int BookID, string name, string author, int categoryId, int numCopy);
+
+		string getName();
+
 		friend ostream& operator << (ostream& out, const Book& book);
 };
 
@@ -20,6 +23,8 @@ class Book{
 Book::Book(int BookID, string name, string author, int categoryId, int numCopy):
 	BookID(BookID), name(name), author(author), categoryId(categoryId), numCopy(numCopy)
 {}
+
+string Book::getName(){ return this -> name; }
 
 ostream& operator << (ostream& out, const Book& book) {
 	out << "Book ID: " << book.BookID << "\n";

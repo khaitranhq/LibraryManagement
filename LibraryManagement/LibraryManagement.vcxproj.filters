@@ -53,5 +53,8 @@
     <ClInclude Include="DatabaseConnect.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
+    <ClInclude Include="Object\ItemDetail.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

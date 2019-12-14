@@ -161,6 +161,7 @@
     <ClInclude Include="Object\Book.h" />
     <ClInclude Include="Object\Category.h" />
     <ClInclude Include="Object\Slip.h" />
+    <ClInclude Include="Object\ItemDetail.h" />
     <ClInclude Include="Object\Student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

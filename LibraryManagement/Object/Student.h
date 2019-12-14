@@ -2,24 +2,26 @@
 
 #include <string>
 #include "Slip.h"
+#include <vector>
+using namespace std;
 
 class Student
 {
 private:
     int userID;
-    Vector<Slip *> receipt;
+    vector<Slip *> receipt;
     string username;
     string address;
-    int phoneNumber;
+    string phoneNumber;
 
 public:
     Student(){}
-    Student(int userID, string username, string address, int phoneNumber);
+    Student(int userID, string username, string address, string phoneNumber);
     void addSlip(Slip *slip);
     friend ostream &operator<<(ostream &out, const Student &student);
 };
 /*======================================*/
-Student::Student(int userID, string username, string address, int phoneNumber) : userID(userID), username(username), address(address), phoneNumber(phoneNumber)
+Student::Student(int userID, string username, string address, string phoneNumber) : userID(userID), username(username), address(address), phoneNumber(phoneNumber)
 {
 }
 ostream &operator<<(ostream &out, const Student &student)

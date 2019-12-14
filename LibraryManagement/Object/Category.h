@@ -1,7 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../Container/Vector.h"
+//#include "../Container/vector.h"
+#include <vector>
 #include "Book.h"
 using namespace std;
 
@@ -9,7 +10,7 @@ class Category
 {
 private:
 	int categoryID;
-	Vector<Book *> books;
+	vector<Book *> books;
 	string categoryName;
 	string moreInfo;
 
