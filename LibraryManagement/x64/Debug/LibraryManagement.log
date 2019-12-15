@@ -1,16 +1,19 @@
 ﻿  LibraryManagement.cpp
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Slip.h(43,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Object\Slip.h(50,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Database\DatabaseConnect.h(319,21): warning C4018: '<': signed/unsigned mismatch
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Database\DatabaseConnect.h(311,7): warning C4101: 'choice': unreferenced local variable
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(42,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message : while compiling class template member function 'void Trie<Book>::insert(const std::string &,T *)'
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(56): message : see reference to function template instantiation 'void Trie<Book>::insert(const std::string &,T *)' being compiled
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(56): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(56): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(56): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(56): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(35): message : see reference to class template instantiation 'Trie<Book>' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(18,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(49,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(60,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(66,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(76,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(87,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(98,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(138,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(158,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(164,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(178,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(182,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(185,24): warning C4018: '<': signed/unsigned mismatch
   LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe

@@ -3,9 +3,8 @@
 #include <conio.h>
 
 #include "Container/Trie.h"
-//#include "Container/Vector.h"
-#include <vector>
-#include <map>
+#include "Container/Vector.h"
+//#include <vector>
 
 #include "Object/Book.h"
 #include "Object/Category.h"
@@ -18,14 +17,10 @@ using namespace std;
 
 const int MAX = 1e6 + 5;
 
-/*Category* refCategory[MAX];
+Category* refCategory[MAX];
 Book* refBook[MAX];
 Student* refStudent[MAX];
-Slip* refSlip[MAX];*/
-map<int, Category *> refCategory;
-map<int, Book *> refBook;
-map<int, Student *> refStudent;
-map<int, Slip *> refSlip;
+Slip* refSlip[MAX];
 
 vector<Category *> categories;
 vector<Book *> books;

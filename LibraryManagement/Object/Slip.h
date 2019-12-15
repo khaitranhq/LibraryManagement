@@ -2,8 +2,7 @@
 
 #include "ItemDetail.h"
 #include "Book.h"
-//#include "../Container/Vector.h"
-#include <vector>
+#include "../Container/Vector.h"
 using namespace std;
 
 class Slip

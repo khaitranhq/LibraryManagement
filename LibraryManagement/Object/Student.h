@@ -2,7 +2,8 @@
 
 #include <string>
 #include "Slip.h"
-#include <vector>
+#include "../Container/Vector.h"
+//#include <vector>
 
 #include "../Functions/Functions.h"
 using namespace std;
