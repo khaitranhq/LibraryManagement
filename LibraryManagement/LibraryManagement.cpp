@@ -39,8 +39,6 @@ void show_menu()
 	cout << " 2. Tim thong tin sach theo danh muc " << endl;
 	cout << " 3. Nhap vao ten nguoi dung , hien thi ra cac sach nguoi do chua tra " << endl;
 	cout << " 4. Them hoa don " << endl;
-	cout << " 5. Them sach " << endl;
-	cout << " 6. Them danh muc " << endl;
 	cout << " 7. Thoat chuong trinh" << endl;
 }
 
@@ -116,19 +114,19 @@ int main()
 	InitStudent();
 	InitSlip();
 
-	show_menu();
 	int question;
-	cout << " Moi nhap lua chon cua ban  :  ";
-	scanf_s("%d", &question);
-	switch (question)
-	{
+	do {
+		show_menu();
+		cin >> question;
+		switch (question)
+		{
 		case 1:
 		{
 			string name;
 			cout << "Nhap ten sach: " << endl;
-			getchar();
+			cin.ignore();
 			getline(cin, name);
-			vector<Book *> ans = bookTree.query(toUpper(name));
+			vector<Book*> ans = bookTree.query(toUpper(name));
 
 			if (ans.size() == 0)
 				cout << "Cuon sach khong co trong thu vien!!" << endl;
@@ -140,15 +138,14 @@ int main()
 			}
 			break;
 		}
-
 		case 2:
 		{
 			string name;
 			cout << "Nhap ten danh muc: " << endl;
-			getchar();
+			cin.ignore();
 			getline(cin, name);
 
-			vector<Category *> ansCategory = categoryTree.query(toUpper(name));
+			vector<Category*> ansCategory = categoryTree.query(toUpper(name));
 
 			if (ansCategory.size() == 0)
 				cout << "Danh muc khong co trong thu vien!!" << endl;
@@ -157,7 +154,7 @@ int main()
 				cout << "Cac sach co trong danh muc: " << endl;
 				for (int i = 0; i < ansCategory.size(); ++i)
 				{
-					vector<Book *> ansBook = ansCategory[i]->getBooks();
+					vector<Book*> ansBook = ansCategory[i]->getBooks();
 					if (ansBook.size() == 0)
 						cout << "Khong co sach trong danh muc!!!" << endl;
 					else
@@ -171,17 +168,17 @@ int main()
 		{
 			string name;
 			cout << "Nhap ten cua ban: " << endl;
-			getchar();
+			cin.ignore();
 			getline(cin, name);
 
-			vector<Student *> student = studentTree.query(toUpper(name));
-			for(int k = 0 ; k < student.size() ; ++k){
+			vector<Student*> student = studentTree.query(toUpper(name));
+			for (int k = 0; k < student.size(); ++k) {
 				int cnt = 0;
 				cout << "Cac sach chua tra cua " << student[k]->getName() << endl;
-				vector<Slip *> receipts = student[0]->getSlips();
+				vector<Slip*> receipts = student[0]->getSlips();
 				for (int i = 0; i < receipts.size(); ++i)
 				{
-					vector<Book *> bookNotReturn = receipts[i]->getBookNotReturned();
+					vector<Book*> bookNotReturn = receipts[i]->getBookNotReturned();
 					for (int j = 0; j < bookNotReturn.size(); ++j)
 					{
 						cout << *bookNotReturn[j] << endl;
@@ -195,24 +192,27 @@ int main()
 		}
 		case 4:
 		{
-			int slipID = slips.back()->getSlipID() + 1;
 
+			int slipID = slips.back()->getSlipID() + 1;
+			cout << slipID << endl;
 			string name;
 			cout << "Ten cua ban: ";
-			getchar();
+			cin.ignore();
 			getline(cin, name);
-			vector<Student*> student = studentTree.query(toUpper(name));
+			vector<Student* > student = studentTree.query(toUpper(name));
 
 			int numBook;
 			cout << "So luong sach ban muon muon: ";
 			cin >> numBook;
-			getchar();
-			Slip*  slip = new Slip(slipID, student[0]->getID(), numBook);
+			cout << student[0]->getID() << endl;
+			Slip* slip = new Slip(slipID, student[0] ->getID(), numBook);
 			for (int i = 1; i <= numBook; ++i) {
 				string nameBook;
 				cout << "Nhap ten cuon sach " << i << ": ";
+				cin.ignore();
 				getline(cin, nameBook);
 				vector<Book*> book = bookTree.query(toUpper(nameBook));
+				cout << " Cuon sach co ID la " << book[0]->getID();
 				ItemDetail* item = new ItemDetail(book[0]->getID());
 				slip->addItem(item);
 			}
@@ -220,6 +220,11 @@ int main()
 			slips.push_back(slip);
 		}
 		case 7:
-			return 0;
-	}
+		{
+			exit(0);
+			break;
+		}
+		}
+	} while (question != 7);
+	return 0;
 }

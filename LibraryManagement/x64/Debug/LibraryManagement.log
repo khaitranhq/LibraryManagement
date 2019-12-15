@@ -11,9 +11,9 @@ C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagem
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(87,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(98,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(138,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(158,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(164,25): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(178,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(182,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(185,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(157,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(163,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(177,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(181,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(184,24): warning C4018: '<': signed/unsigned mismatch
   LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe
