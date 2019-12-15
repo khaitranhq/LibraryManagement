@@ -5,11 +5,11 @@
 #include <vector>
 
 #include "Object/Book.h"
-/*#include "Object/Category.h"
+#include "Object/Category.h"
 #include "Object/Slip.h"
-#include "Object/Student.h"*/
+#include "Object/Student.h"
 
-#include "DatabaseConnect.h"
+#include "Database/DatabaseConnect.h"
 #include "Functions/Functions.h"
 using namespace std;
 
