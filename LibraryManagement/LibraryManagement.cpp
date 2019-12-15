@@ -206,11 +206,11 @@ int main()
 			int numBook;
 			cout << "So luong sach ban muon muon: ";
 			cin >> numBook;
+			getchar();
 			Slip*  slip = new Slip(slipID, student[0]->getID(), numBook);
 			for (int i = 1; i <= numBook; ++i) {
 				string nameBook;
 				cout << "Nhap ten cuon sach " << i << ": ";
-				getchar();
 				getline(cin, nameBook);
 				vector<Book*> book = bookTree.query(toUpper(nameBook));
 				ItemDetail* item = new ItemDetail(book[0]->getID());
