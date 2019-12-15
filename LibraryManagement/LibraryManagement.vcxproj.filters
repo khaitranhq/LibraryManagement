@@ -62,5 +62,8 @@
     <ClInclude Include="Functions\Functions.h">
       <Filter>Header Files\Functions</Filter>
     </ClInclude>
+    <ClInclude Include="Container\Date.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

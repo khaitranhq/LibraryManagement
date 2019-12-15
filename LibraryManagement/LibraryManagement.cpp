@@ -17,11 +17,13 @@ const int MAX = 1e6 + 5;
 
 Category* refCategory[MAX];
 Book* refBook[MAX];
+Student* refStudent[MAX];
 
 vector<Category*> categories;
 vector<Book*> books;
-//vector<Slip> slips;
-//vector<Student> students;
+vector<Slip*> slips;
+vector<Student*> students;
+
 Trie<Book> bookTree;
 Trie<Category> categoryTree;
 
@@ -55,16 +57,34 @@ void InitCategory() {
 	}
 }
 
+void InitStudent() {
+	for (int i = 0; i < students.size(); ++i) {
+		int studentID = students[i]->getID();
+		refStudent[studentID] = students[i];
+	}
+}
+
+void InitSlip() {
+	for (int i = 0; i < slips.size(); ++i) {
+		int studentID = slips[i]->getUserID();
+		Student* student = refStudent[studentID];
+		student->addSlip(slips[i]);
+	}
+}
+
 int main() {
 	DatabaseConnect DB;
-	DB.init();
 	
 	categories = DB.getCategory();
 	books = DB.getBook();
+	students = DB.getStudent();
+	slips = DB.getSlip();
 
 	InitBook();
-	return 0;
 	InitCategory();
+	InitStudent();
+	InitSlip();
+
 	int question;
 	show_menu();
 	cin >> question;

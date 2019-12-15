@@ -66,7 +66,7 @@ VALUES
 ('Windows2000 Professional','Nguyen Thanh Vinh',004,3),
 ('Windows2000 Advances Server','Duong Van Chinh',004,5),
 ('Lap trinh visual Basic 6','Nguyen Tien ',005,3),
-('Ngôn ngữ lap trinh c++','Tang Dinh Quy',005,5),
+('Ngon ngưu lap trinh c++','Tang Dinh Quy',005,5),
 ('Lap trinh Windows bang Visual c++','Dang Van Duc',005,4),
 ('Excel Toan Tap','Doan Cong Hung',007,5),
 ('Word 2000 Toan Tap','Doan Cong Hung',007,4),

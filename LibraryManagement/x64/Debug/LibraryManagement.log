@@ -6,10 +6,10 @@ C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         [
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :             T=Book
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message : see reference to function template instantiation 'void Trie<Book>::insert(const std::string &,T *)' being compiled
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :         with
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :         [
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :             T=Book
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(42): message :         ]
-C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(25): message : see reference to class template instantiation 'Trie<Book>' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(44): message : see reference to function template instantiation 'void Trie<Book>::insert(const std::string &,T *)' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(44): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(44): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(44): message :             T=Book
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(44): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(27): message : see reference to class template instantiation 'Trie<Book>' being compiled
   LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe
