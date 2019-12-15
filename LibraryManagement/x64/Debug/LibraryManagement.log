@@ -1,4 +1,5 @@
 ﻿  LibraryManagement.cpp
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Database\DatabaseConnect.h(311,7): warning C4101: 'choice': unreferenced local variable
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(19,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(42,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message : while compiling class template member function 'void Trie<Book>::insert(const std::string &,T *)'

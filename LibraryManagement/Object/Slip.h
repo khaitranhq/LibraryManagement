@@ -22,9 +22,9 @@ class Slip
 		int getUserID();
 		int getNumberItems();
 
+		vector<int> getBooksID();
 		vector<Book*> getBookNotReturned();
 
-		friend istream& operator >> (istream& in, Slip& slip);
 		friend ostream& operator << (ostream& out, const Slip& slip);
 };
 
@@ -39,16 +39,19 @@ int Slip::getSlipID() { return this->slipID; }
 int Slip::getUserID() { return this -> userID; }
 int Slip::getNumberItems() { return (int) items.size(); }
 
+vector<int> Slip::getBooksID() {
+	vector<int> ans;
+	for (int i = 0; i < items.size(); ++i)
+		ans.push_back(items[i]->getBookID());
+	return ans;
+}
+
 vector<Book*> Slip::getBookNotReturned() {
 	vector<Book*> ans;
 	for (int i = 0; i < items.size(); ++i)
 		if (items[i]->isReturned())
 			ans.push_back(items[i]->getBook());
 	return ans;
-}
-
-istream& operator >> (istream& in, Slip& slip) {
-	return in;
 }
 
 ostream& operator << (ostream& out, const Slip& slip) {

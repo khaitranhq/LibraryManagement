@@ -200,7 +200,29 @@ int main()
 		}
 		case 4:
 		{
+			int slipID = slips.back()->getSlipID() + 1;
 
+			string name;
+			cout << "Ten cua ban: ";
+			getchar();
+			getline(cin, name);
+			vector<Student*> student = studentTree.query(toUpper(name));
+
+			int numBook;
+			cout << "So luong sach ban muon muon: ";
+			cin >> numBook;
+			Slip*  slip = new Slip(slipID, student[0]->getID(), numBook);
+			for (int i = 1; i <= numBook; ++i) {
+				string nameBook;
+				cout << "Nhap ten cuon sach " << i << ": ";
+				getchar();
+				getline(cin, nameBook);
+				vector<Book*> book = bookTree.query(toUpper(nameBook));
+				ItemDetail* item = new ItemDetail(book[0]->getID());
+				slip->addItem(item);
+			}
+			DB.insert(*slip);
+			slips.push_back(slip);
 		}
 		case 7:
 			return 0;

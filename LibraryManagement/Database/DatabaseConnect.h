@@ -60,7 +60,7 @@ class DatabaseConnect
 
 		void show_error(unsigned int handletype, const SQLHANDLE &handle);
 
-		void insert(const Slip &slip);
+		void insert(Slip slip);
 		void close();
 };
 
@@ -300,53 +300,34 @@ void DatabaseConnect::show_error(unsigned int handletype, const SQLHANDLE &handl
 		std::wcout << L"Message: " << message << L"\nSQLSTATE: " << sqlstate << std::endl;
 }
 
-/*void DatabaseConnect::insert(const Slip& slip)
+void DatabaseConnect::insert(Slip slip)
 {
-	string str = "EXEC addSlip  @UserID =" + to_string(slip.getUserID()) + ",@Number_Book_Borrow =" + to_string(slip.getNumberBooks) + ";";
+	int numberItems = slip.getNumberItems();
+	string str = "EXEC addSlip  @UserID =" + to_string(slip.getUserID()) + ",@Number_Book_Borrow =" + to_string(slip.getNumberItems()) + ";";
 	wstring a = s2ws(str);
 	LPCWSTR result = a.c_str();
 	while (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
 	{
 		int choice;
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
-		cout << " ban co muon nhap lai thong tin khong ? (1.CO \t 2.KHONG ) " << endl;
-		cout << " moi nhap lua chon cua ban :  ";
-		cin >> choice;
-		if (choice == 1)
-			goto addSlipAgain;
-		else
-			goto here4;
+		close();
 	}
 
 	if (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
 	{
-		int SlipID, BookID;
-		cout << " Bat dau nhap chi tiet hoa don " << SlipID << " : ";
-		for (int i = 0; i < number; i++)
+		vector<int> booksID = slip.getBooksID();
+		for (int i = 0; i < booksID.size() ; i++)
 		{
-			cout << "Moi nhap ID cuon sach muon : ";
-			cin >> BookID;
-			// thêm vào DB
-			string str1 = " EXEC add_Slip_Detail @SlipID = " + to_string(SlipID) + ",@BookID=" + to_string(BookID);
+			string str1 = " EXEC add_Slip_Detail @SlipID = " + to_string(slip.getSlipID()) + ",@BookID=" + to_string(booksID[i]);
 			wstring b = s2ws(str1);
 			LPCWSTR result1 = b.c_str();
 			if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
-			{
 				show_error(SQL_HANDLE_STMT, sqlStmtHandle);
-			}
-			else
-			{
-				// gọi constructor slip_detail
-				cout << " Thêm chi tiết hóa đơn thành công  !!!!";
-			}
 		}
 		cout << " Them hoa don thanh cong " << endl;
 	}
 	SQLCloseCursor(sqlStmtHandle);
 }
-here4: break;
-
-}*/
 
 void DatabaseConnect::close()
 {

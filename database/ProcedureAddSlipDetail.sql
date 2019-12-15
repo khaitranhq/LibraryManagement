@@ -16,7 +16,7 @@ BEGIN
 		ELSE
 		BEGIN
 			UPDATE dbo.Books SET Num_copy=@Num_copy-1 WHERE BookID=@BookID;
-			INSERT INTO dbo.SLip_Detail VALUES (@SlipID,@BookID,0,GETDATE(),NULL);
+			INSERT INTO dbo.Slip_Detail VALUES (@SlipID,@BookID,0,GETDATE(),NULL);
 		END
 	END
 	ELSE IF NOT EXISTS (SELECT b.BookID FROM Books b WHERE BookID = @BookID)
