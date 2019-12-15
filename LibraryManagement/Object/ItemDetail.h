@@ -17,6 +17,7 @@ class ItemDetail {
 
 		bool isReturned(){ return status; }
 		void setBook(Book* book);
+		Book* getBook();
 		int getBookID();
 		int getSlipID();
 
@@ -36,6 +37,7 @@ ItemDetail::ItemDetail(int slipID, int bookID, bool status, Date dateBorrow, Dat
 void ItemDetail::setBook(Book* book) { this->book = book; }
 int ItemDetail::getBookID() { return bookID; }
 int ItemDetail::getSlipID() { return slipID; }
+Book* ItemDetail::getBook() { return book; }
 
 ostream& operator << (ostream& out, const ItemDetail& item){
 	out << "Ten sach: " << item.book -> getName() << endl;

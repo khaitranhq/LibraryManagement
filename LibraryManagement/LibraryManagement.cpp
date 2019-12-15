@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include <conio.h>
 
 #include "Container/Trie.h"
@@ -46,7 +47,6 @@ void show_menu()
 	cout << " 5. Them sach " << endl;
 	cout << " 6. Them danh muc " << endl;
 	cout << " 7. Thoat chuong trinh" << endl;
-	cout << " Moi nhap lua chon cua ban  :  ";
 }
 
 void InitBook()
@@ -120,73 +120,89 @@ int main()
 	InitCategory();
 	InitStudent();
 	InitSlip();
-	return 0;
-	while (1)
+
+	show_menu();
+	int question;
+	cout << " Moi nhap lua chon cua ban  :  ";
+	scanf_s("%d", &question);
+	switch (question)
 	{
-		int question = 7;
-		show_menu();
-		while (1) {
-			cin >> question;
-			if (question >= 1 && question <= 7) break;
-		}
-		switch (question)
+		case 1:
 		{
-			case 1:
-			{
-				string name;
-				cout << "Nhap ten sach: ";
-				cin >> name;
-				vector<Book *> ans = bookTree.query(toUpper(name));
+			string name;
+			cout << "Nhap ten sach: " << endl;
+			getchar();
+			getline(cin, name);
+			vector<Book *> ans = bookTree.query(toUpper(name));
 
-				if (ans.size() == 0)
-					cout << "Cuon sach khong co trong thu vien!!";
-				else {
-					cout << "Cac sach tim duoc theo ten: " << endl;
-					for (int i = 0; i < ans.size(); ++i)
-						cout << *ans[i] << endl;
-				}
-				break;
+			if (ans.size() == 0)
+				cout << "Cuon sach khong co trong thu vien!!" << endl;
+			else
+			{
+				cout << "Cac sach tim duoc theo ten: " << endl;
+				for (int i = 0; i < ans.size(); ++i)
+					cout << *ans[i] << endl;
 			}
+			break;
+		}
 
-			case 2:
+		case 2:
+		{
+			string name;
+			cout << "Nhap ten danh muc: " << endl;
+			getchar();
+			getline(cin, name);
+
+			vector<Category *> ansCategory = categoryTree.query(toUpper(name));
+
+			if (ansCategory.size() == 0)
+				cout << "Danh muc khong co trong thu vien!!" << endl;
+			else
 			{
-				string name;
-				cout << "Nhap ten danh muc: ";
-				cin >> name;
+				cout << "Cac sach co trong danh muc: " << endl;
+				for (int i = 0; i < ansCategory.size(); ++i)
+				{
+					vector<Book *> ansBook = ansCategory[i]->getBooks();
+					if (ansBook.size() == 0)
+						cout << "Khong co sach trong danh muc!!!" << endl;
+					else
+						for (int j = 0; j < ansBook.size(); ++j)
+							cout << *ansBook[j] << endl;
+				}
+			}
+			break;
+		}
+		case 3:
+		{
+			string name;
+			cout << "Nhap ten cua ban: " << endl;
+			getchar();
+			getline(cin, name);
 
-				vector<Category *> ansCategory = categoryTree.query(toUpper(name));
-
-				if (ansCategory.size() == 0) 
-					cout << "Danh muc khong co trong thu vien!!" ;
-				else {
-					cout << "Cac sach co trong danh muc: " << endl;
-					for (int i = 0; i < ansCategory.size(); ++i)
+			vector<Student *> student = studentTree.query(toUpper(name));
+			for(int k = 0 ; k < student.size() ; ++k){
+				int cnt = 0;
+				cout << "Cac sach chua tra cua " << student[k]->getName() << endl;
+				vector<Slip *> receipts = student[0]->getSlips();
+				for (int i = 0; i < receipts.size(); ++i)
+				{
+					vector<Book *> bookNotReturn = receipts[i]->getBookNotReturned();
+					for (int j = 0; j < bookNotReturn.size(); ++j)
 					{
-						vector<Book*> ansBook = ansCategory[i]->getBooks();
-						if (ansBook.size() == 0)
-							cout << "Khong co sach trong danh muc!!!" << endl;
-						else 
-							for (int j = 0; j < ansBook.size(); ++j)
-								cout << *ansBook[j] << endl;
+						cout << *bookNotReturn[j] << endl;
+						++cnt;
 					}
 				}
-				break;
+				if (!cnt)
+					cout << "Ban khong muon cuon sach nao!" << endl;
 			}
-			case 4:
-			{
-				string name;
-				cout << "Nhap ten cua ban: ";
-				cin >> name;
-
-				vector<Student *> student = studentTree.query(name);
-				if (student.size() > 1)
-					break;
-			}
-			case 7:
-				return 0;
-			default:
-				break;
+			break;
 		}
-		cout << endl;
+		case 4:
+		{
+
+		}
+		case 7:
+			return 0;
 	}
 }

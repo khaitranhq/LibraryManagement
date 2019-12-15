@@ -22,6 +22,7 @@ class Student
 
 		string getName();
 		int getID();
+		vector<Slip*> getSlips();
 		void addSlip(Slip *slip);
 
 		friend ostream &operator<<(ostream &out, const Student &student);
@@ -33,13 +34,9 @@ Student::Student(int userID, string username, string address, string phoneNumber
 }
 
 int Student::getID() { return this->userID; }
-
-void Student::addSlip(Slip* slip)
-{
-	receipt.push_back(slip);
-}
-
 string Student::getName() { return this->username; }
+vector<Slip*> Student::getSlips() { return this->receipt; }
+void Student::addSlip(Slip* slip) { receipt.push_back(slip); }
 
 ostream &operator<<(ostream &out, const Student &student)
 {

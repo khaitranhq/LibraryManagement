@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ItemDetail.h"
+#include "Book.h"
 //#include "../Container/Vector.h"
 #include <vector>
 using namespace std;
@@ -21,6 +22,8 @@ class Slip
 		int getUserID();
 		int getNumberItems();
 
+		vector<Book*> getBookNotReturned();
+
 		friend istream& operator >> (istream& in, Slip& slip);
 		friend ostream& operator << (ostream& out, const Slip& slip);
 };
@@ -35,6 +38,14 @@ void Slip::addItem(ItemDetail* item){ items.push_back(item); }
 int Slip::getSlipID() { return this->slipID; }
 int Slip::getUserID() { return this -> userID; }
 int Slip::getNumberItems() { return (int) items.size(); }
+
+vector<Book*> Slip::getBookNotReturned() {
+	vector<Book*> ans;
+	for (int i = 0; i < items.size(); ++i)
+		if (items[i]->isReturned())
+			ans.push_back(items[i]->getBook());
+	return ans;
+}
 
 istream& operator >> (istream& in, Slip& slip) {
 	return in;

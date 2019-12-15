@@ -51,6 +51,7 @@ template <typename T> vector<T*> Trie<T>::query(const string &s){
     vector<T*> ans;
     int cur = 0;
     for(int i = 0 ; i < s.size() ; ++i){
+		if (s[i] == ' ') continue;
         int j = s[i] - 'A';
         if (Tree[cur].next[j] == -1) return ans;
         cur = Tree[cur].next[j];
