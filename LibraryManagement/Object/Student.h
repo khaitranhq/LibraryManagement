@@ -3,13 +3,15 @@
 #include <string>
 #include "Slip.h"
 #include <vector>
+
+#include "../Functions/Functions.h"
 using namespace std;
 
 class Student
 {
 	private:
 		int userID;
-		vector<Slip* > receipt;
+		vector<Slip*> receipt;
 		string username;
 		string address;
 		string phoneNumber;
@@ -18,12 +20,15 @@ class Student
 		Student(){}
 		Student(int userID, string username, string address, string phoneNumber);
 
+		string getName();
 		int getID();
 		void addSlip(Slip *slip);
+
 		friend ostream &operator<<(ostream &out, const Student &student);
 };
 /*======================================*/
-Student::Student(int userID, string username, string address, string phoneNumber) : userID(userID), username(username), address(address), phoneNumber(phoneNumber)
+Student::Student(int userID, string username, string address, string phoneNumber) : 
+	userID(userID), username(toUpper(username)), address(toUpper(address)), phoneNumber(toUpper(phoneNumber))
 {
 }
 
@@ -34,11 +39,14 @@ void Student::addSlip(Slip* slip)
 	receipt.push_back(slip);
 }
 
+string Student::getName() { return this->username; }
+
 ostream &operator<<(ostream &out, const Student &student)
 {
     out << "user ID: " << student.userID << "\n";
     out << "User Name: " << student.username << "\n";
     out << "Address: " << student.address << "\n";
     out << "PhoneNumber: " << student.phoneNumber << "\n";
+	out << "SLip: " << student.receipt.size() << "\n";
 	return out;
 }

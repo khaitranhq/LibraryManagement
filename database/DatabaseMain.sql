@@ -82,7 +82,7 @@ VALUES
 ('Nguyen Van Dinh','92 Quang Trung - Da Nang','0511810583'),
 ('Nguyen Van Hai','92 Quang Trung - Da Nang','0511810583'),
 ('Nguyen Thi Thu Ha','92 Quang Trung - Da Nang','0511810583'),
-('Đo Thi Thien Ngan','92 Quang Trung - Da Nang','0511810583'),
+('Do Thi Thien Ngan','92 Quang Trung - Da Nang','0511810583'),
 ('Nguyen Van Anh','30 Phan Châu Trinh - Da Nang','0913576890');
 -- INSERT DATA INTO TABLE  Slip -- 
 INSERT INTO Slips

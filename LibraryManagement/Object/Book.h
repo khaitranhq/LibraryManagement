@@ -14,6 +14,7 @@ class Book{
 		Book(){}
 		Book(int BookID, string name, string author, int categoryId, int numCopy);
 
+		int getID();
 		int getCategoryID();
 		string getName();
 
@@ -27,6 +28,7 @@ Book::Book(int BookID, string name, string author, int categoryId, int numCopy):
 {
 }
 
+int Book::getID() { return this->BookID; }
 int Book::getCategoryID() { return this->categoryId;  }
 string Book::getName(){ return this -> name; }
 

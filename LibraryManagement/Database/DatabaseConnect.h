@@ -10,11 +10,13 @@
 //#include "Container/vector.h"
 #include <vector>
 
-#include "Object/Book.h"
-#include "Object/Category.h"
-#include "Object/Slip.h"
-#include "Object/Student.h"
-#include "Object/ItemDetail.h"
+#include "../Object/Book.h"
+#include "../Object/Category.h"
+#include "../Object/Slip.h"
+#include "../Object/Student.h"
+#include "../Object/ItemDetail.h"
+
+#include "../Container/Date.h"
 
 #define SQL_RESULT_LEN 240
 #define SQL_RETURN_CODE_LEN 1000
@@ -54,7 +56,7 @@ class DatabaseConnect
 		vector<Category*> getCategory();
 		vector<Slip*> getSlip();
 		vector<Student*> getStudent();
-		vector<ItemDetail> getItemDetail();
+		vector<ItemDetail*> getItemDetail();
 
 		void show_error(unsigned int handletype, const SQLHANDLE &handle);
 
@@ -202,18 +204,20 @@ vector<Slip*> DatabaseConnect::getSlip() {
 	cout << "\n";
 
 	vector<Slip*> ans;
-	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Slip", SQL_NTS)) {
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Slips", SQL_NTS)) {
 		cout << "Error querying SQL Server";
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
 		cout << "\n";
 		close();
 	}
 	else {
-		int slipID, userID;
+		int slipID, userID, numberBorrow;
 		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
 			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &slipID, 7, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_LONG, &userID, 7, NULL);
-			Slip* slip = new Slip(slipID, userID);
+			SQLGetData(sqlStmtHandle, 3, SQL_C_LONG, &numberBorrow, 7, NULL);
+
+			Slip* slip = new Slip(slipID, userID, numberBorrow);
 			ans.push_back(slip);
 		}
 	}
@@ -228,7 +232,7 @@ vector<Student*> DatabaseConnect::getStudent()
 	cout << "\n";
 
 	vector<Student*> ans;
-	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Books", SQL_NTS))
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR *)L"SELECT * FROM Students", SQL_NTS))
 	{
 		cout << "Error querying SQL Server";
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
@@ -243,7 +247,7 @@ vector<Student*> DatabaseConnect::getStudent()
 		char tel[10];
 		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
 		{
-			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 3, NULL);
+			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 7, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_CHAR, &name, 50, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &address, 50, NULL);
 			SQLGetData(sqlStmtHandle, 4, SQL_C_LONG, &tel, 10, NULL);
@@ -255,12 +259,12 @@ vector<Student*> DatabaseConnect::getStudent()
 	return ans;
 }
 
-vector<ItemDetail> DatabaseConnect::getItemDetail() {
+vector<ItemDetail*> DatabaseConnect::getItemDetail() {
 	cout << "\n";
 	cout << "Executing T-SQL query...";
 	cout << "\n";
 
-	vector<ItemDetail> ans;
+	vector<ItemDetail*> ans;
 	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT * FROM Slip_Detail", SQL_NTS))
 	{
 		cout << "Error querying SQL Server";
@@ -271,16 +275,17 @@ vector<ItemDetail> DatabaseConnect::getItemDetail() {
 	else
 	{
 		int slipID, bookID;
-		bool status;
+		int status;
 		char dateBorrow[10], dateReturn[10];
 		while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
 		{
 			SQLGetData(sqlStmtHandle, 2, SQL_C_LONG, &slipID, 7, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_LONG, &bookID, 7, NULL);
-			SQLGetData(sqlStmtHandle, 4, SQL_C_LONG, &status, 1, NULL);
+			SQLGetData(sqlStmtHandle, 4, SQL_C_LONG, &status, 2, NULL);
 			SQLGetData(sqlStmtHandle, 5, SQL_C_CHAR, &dateBorrow, 10, NULL);
-			SQLGetData(sqlStmtHandle, 5, SQL_C_CHAR, &dateReturn, 10, NULL);
-			ans.push_back(ItemDetail(bôk))
+			SQLGetData(sqlStmtHandle, 6, SQL_C_CHAR, &dateReturn, 10, NULL);
+			ItemDetail* item = new ItemDetail(slipID, bookID, status, Date(dateBorrow), Date(dateReturn));
+			ans.push_back(item);
 		}
 	}
 	SQLCloseCursor(sqlStmtHandle);

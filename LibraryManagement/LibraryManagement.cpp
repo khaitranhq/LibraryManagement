@@ -1,8 +1,10 @@
 #include <iostream>
+#include <conio.h>
 
 #include "Container/Trie.h"
 //#include "Container/Vector.h"
 #include <vector>
+#include <map>
 
 #include "Object/Book.h"
 #include "Object/Category.h"
@@ -15,17 +17,25 @@ using namespace std;
 
 const int MAX = 1e6 + 5;
 
-Category* refCategory[MAX];
+/*Category* refCategory[MAX];
 Book* refBook[MAX];
 Student* refStudent[MAX];
+Slip* refSlip[MAX];*/
+map<int, Category *> refCategory;
+map<int, Book *> refBook;
+map<int, Student *> refStudent;
+map<int, Slip *> refSlip;
 
-vector<Category*> categories;
-vector<Book*> books;
-vector<Slip*> slips;
-vector<Student*> students;
+vector<Category *> categories;
+vector<Book *> books;
+vector<Slip *> slips;
+vector<Student *> students;
 
 Trie<Book> bookTree;
 Trie<Category> categoryTree;
+Trie<Student> studentTree;
+
+DatabaseConnect DB;
 
 void show_menu()
 {
@@ -39,42 +49,68 @@ void show_menu()
 	cout << " Moi nhap lua chon cua ban  :  ";
 }
 
-void InitBook() {
-	for (int i = 0; i < books.size(); ++i) 
-		bookTree.insert(books[i] -> getName(), books[i]);
+void InitBook()
+{
+	for (int i = 0; i < books.size(); ++i)
+	{
+		bookTree.insert(books[i]->getName(), books[i]);
+
+		int bookID = books[i]->getID();
+		refBook[bookID] = books[i];
+	}
 }
 
-void InitCategory() {
-	for (int i = 0; i < categories.size(); ++i) {
+void InitCategory()
+{
+	for (int i = 0; i < categories.size(); ++i)
+	{
 		categoryTree.insert(categories[i]->getName(), categories[i]);
 		refCategory[categories[i]->getID()] = categories[i];
 	}
 
-	for (int i = 0; i < books.size(); ++i) {
+	for (int i = 0; i < books.size(); ++i)
+	{
 		int categoryID = books[i]->getCategoryID();
-		Category* category = refCategory[categoryID];
+		Category *category = refCategory[categoryID];
 		category->addBook(books[i]);
 	}
 }
 
-void InitStudent() {
-	for (int i = 0; i < students.size(); ++i) {
+void InitStudent()
+{
+	for (int i = 0; i < students.size(); ++i)
+	{
+		studentTree.insert(students[i]->getName(), students[i]);
 		int studentID = students[i]->getID();
 		refStudent[studentID] = students[i];
 	}
 }
 
-void InitSlip() {
-	for (int i = 0; i < slips.size(); ++i) {
+void InitSlip()
+{
+	vector<Slip *> s;
+	for (int i = 0; i < slips.size(); ++i)
+	{
 		int studentID = slips[i]->getUserID();
-		Student* student = refStudent[studentID];
+		int slipID = slips[i]->getSlipID();
+
+		refSlip[slipID] = slips[i];
+		Student *student = refStudent[studentID];
 		student->addSlip(slips[i]);
+	}
+
+	vector<ItemDetail *> items = DB.getItemDetail();
+	for (int i = 0; i < items.size(); ++i)
+	{
+		items[i]->setBook(refBook[items[i]->getBookID()]);
+		int slipID = items[i]->getSlipID();
+		Slip *slip = refSlip[slipID];
+		slip->addItem(items[i]);
 	}
 }
 
-int main() {
-	DatabaseConnect DB;
-	
+int main()
+{
 	categories = DB.getCategory();
 	books = DB.getBook();
 	students = DB.getStudent();
@@ -84,40 +120,73 @@ int main() {
 	InitCategory();
 	InitStudent();
 	InitSlip();
-
-	int question;
-	show_menu();
-	cin >> question;
-
-
-	switch (question) {
-		case 1: {
-			string name;
-			cout << "Nhap ten sach: ";
-			cin >> name;
-			vector<Book*> ans = bookTree.query(toUpper(name));
-
-			cout << "Cac sach tim duoc theo ten: " << endl;
-			for (int i = 0; i < ans.size(); ++i)
-				cout << *ans[i] << endl;
-			break;
-		}
-
-		case 2: {
-			string name;
-			cout << "Nhap ten danh muc: ";
-			cin >> name;
-
-			cout << "Cac sach co trong danh muc: " << endl;
-			vector<Category*> ansCategory = categoryTree.query(toUpper(name));
-			for (int i = 0; i < ansCategory.size(); ++i) {
-				vector<Book*> ansBook = ansCategory[i]->getBooks();
-				for (int j = 0; j < ansBook.size(); ++j)
-					cout << ansBook[j] << endl;
-			}
-		}
-	}
-
-	DB.close();
 	return 0;
+	while (1)
+	{
+		int question = 7;
+		show_menu();
+		while (1) {
+			cin >> question;
+			if (question >= 1 && question <= 7) break;
+		}
+		switch (question)
+		{
+			case 1:
+			{
+				string name;
+				cout << "Nhap ten sach: ";
+				cin >> name;
+				vector<Book *> ans = bookTree.query(toUpper(name));
+
+				if (ans.size() == 0)
+					cout << "Cuon sach khong co trong thu vien!!";
+				else {
+					cout << "Cac sach tim duoc theo ten: " << endl;
+					for (int i = 0; i < ans.size(); ++i)
+						cout << *ans[i] << endl;
+				}
+				break;
+			}
+
+			case 2:
+			{
+				string name;
+				cout << "Nhap ten danh muc: ";
+				cin >> name;
+
+				vector<Category *> ansCategory = categoryTree.query(toUpper(name));
+
+				if (ansCategory.size() == 0) 
+					cout << "Danh muc khong co trong thu vien!!" ;
+				else {
+					cout << "Cac sach co trong danh muc: " << endl;
+					for (int i = 0; i < ansCategory.size(); ++i)
+					{
+						vector<Book*> ansBook = ansCategory[i]->getBooks();
+						if (ansBook.size() == 0)
+							cout << "Khong co sach trong danh muc!!!" << endl;
+						else 
+							for (int j = 0; j < ansBook.size(); ++j)
+								cout << *ansBook[j] << endl;
+					}
+				}
+				break;
+			}
+			case 4:
+			{
+				string name;
+				cout << "Nhap ten cua ban: ";
+				cin >> name;
+
+				vector<Student *> student = studentTree.query(name);
+				if (student.size() > 1)
+					break;
+			}
+			case 7:
+				return 0;
+			default:
+				break;
+		}
+		cout << endl;
+	}
 }
