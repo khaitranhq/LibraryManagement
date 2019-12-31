@@ -21,6 +21,9 @@ class ItemDetail {
 		Book* getBook();
 		int getBookID();
 		int getSlipID();
+		
+		void setStatus();
+		void setDateReturn();
 
 		friend ostream& operator << (ostream& out, const ItemDetail& item);
 };
@@ -42,6 +45,8 @@ void ItemDetail::setBook(Book* book) { this->book = book; }
 int ItemDetail::getBookID() { return bookID; }
 int ItemDetail::getSlipID() { return slipID; }
 Book* ItemDetail::getBook() { return book; }
+
+void ItemDetail::setStatus() { this->status = 1; }
 
 ostream& operator << (ostream& out, const ItemDetail& item){
 	out << "Ten sach: " << item.book -> getName() << endl;

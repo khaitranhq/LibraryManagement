@@ -26,11 +26,14 @@ public:
 	void push_back(const T& value);
 	void pop_back();
 
-	void reserve(unsigned int capacity);
+	void reserve(unsigned int capacity); 
 	void resize(unsigned int size);
+
+	void erase(const int& index);
 
 	T& operator[](unsigned int index);
 	vector<T>& operator=(const vector<T>&);
+
 	void clear();
 private:
 	unsigned int my_size;
@@ -91,7 +94,7 @@ vector<T>& vector<T>::operator = (const vector<T>& v)
 template<class T>
 typename vector<T>::iterator vector<T>::begin()
 {
-	return buffer;
+	return buffer; 
 }
 
 template<class T>
@@ -170,6 +173,17 @@ template<class T>
 unsigned int vector<T>::capacity()const
 {
 	return my_capacity;
+}
+
+template<class T>
+void vector<T>::erase(const int& index) {
+	vector<T> ans;
+	for (int i = 0; i < my_size; ++i)
+		if (i != index)
+			ans.push_back(buffer[i]);
+	delete[] buffer;
+	buffer = ans.buffer;
+	--my_size;
 }
 
 template<class T>

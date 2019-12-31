@@ -61,6 +61,9 @@ class DatabaseConnect
 		void show_error(unsigned int handletype, const SQLHANDLE &handle);
 
 		void insert(Slip slip);
+		void update_slip_detail(ItemDetail& itemDetail);
+		void add_Student(Student student);
+		void delete_Student(string& tel);
 		void close();
 };
 
@@ -250,8 +253,8 @@ vector<Student*> DatabaseConnect::getStudent()
 			SQLGetData(sqlStmtHandle, 1, SQL_C_LONG, &id, 7, NULL);
 			SQLGetData(sqlStmtHandle, 2, SQL_C_CHAR, &name, 50, NULL);
 			SQLGetData(sqlStmtHandle, 3, SQL_C_CHAR, &address, 50, NULL);
-			SQLGetData(sqlStmtHandle, 4, SQL_C_LONG, &tel, 10, NULL);
-			Student* student = new Student(id, toString(name), toString(address), toString(tel));
+			SQLGetData(sqlStmtHandle, 4, SQL_C_CHAR, &tel, 10, NULL);
+			Student* student = new Student(id, toString(name), toString(address), tel);
 			ans.push_back(student);
 		}
 	}
@@ -306,14 +309,12 @@ void DatabaseConnect::insert(Slip slip)
 	string str = "EXEC addSlip  @UserID =" + to_string(slip.getUserID()) + ",@Number_Book_Borrow =" + to_string(slip.getNumberItems()) + ";";
 	wstring a = s2ws(str);
 	LPCWSTR result = a.c_str();
-	while (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
 	{
 		int choice;
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
 		close();
-	}
-
-	if (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+	} else
 	{
 		vector<int> booksID = slip.getBooksID();
 		for (int i = 0; i < booksID.size() ; i++)
@@ -321,12 +322,74 @@ void DatabaseConnect::insert(Slip slip)
 			string str1 = " EXEC add_Slip_Detail @SlipID = " + to_string(slip.getSlipID()) + ",@BookID=" + to_string(booksID[i]);
 			wstring b = s2ws(str1);
 			LPCWSTR result1 = b.c_str();
-			if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
+			if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result1, SQL_NTS))
 				show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+			cout << " Them hoa don thanh cong " << endl;
 		}
-		cout << " Them hoa don thanh cong " << endl;
 	}
 	SQLCloseCursor(sqlStmtHandle);
+}
+
+void DatabaseConnect::update_slip_detail(ItemDetail& itemDetail) {
+	//EXEC update_slip_detail @SlipID =30002 , @BookID = 102;
+	string str = "EXEC update_slip_detail @SlipID = " + to_string(itemDetail.getSlipID()) + ", @BookID =" + to_string(itemDetail.getBookID());
+	wstring a = s2ws(str);
+	LPCWSTR result = a.c_str();
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
+	{
+		//cout << " Error SQL Querry";
+		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+		goto here4;
+	}
+	else
+	{
+		cout << " Update phieu muon thanh cong" << endl;
+	}
+here4: {
+	SQLCloseCursor(sqlStmtHandle);
+	return;
+	}
+}
+
+void DatabaseConnect::add_Student(Student student) {
+	// INSERT dbo.Students VALUES ()
+	string str = " INSERT dbo.Students VALUES ('" + student.getUsername() + "','" + student.getAddress() + "','" + student.getPhoneNumber() + "')";
+	wstring a = s2ws(str);
+	LPCWSTR result = a.c_str();
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
+	{
+		//cout << " Error SQL Querry";
+		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+		goto here4;
+	}
+	else
+	{
+		cout << "them hoc sinh thanh cong" << endl;
+	}
+here4: {
+	SQLCloseCursor(sqlStmtHandle);
+	return;
+	}
+}
+
+void DatabaseConnect::delete_Student(string& tel) {
+	string str = " DELETE FROM dbo.Students WHERE Tel='" + tel + "';";
+	wstring a = s2ws(str);
+	LPCWSTR result = a.c_str();
+	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
+	{
+		//cout << " Error SQL Querry";
+		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+		goto here4;
+	}
+	else
+	{
+		cout << "xoa hoc sinh thanh cong" << endl;
+	}
+here4: {
+	SQLCloseCursor(sqlStmtHandle);
+	return;
+	}
 }
 
 void DatabaseConnect::close()

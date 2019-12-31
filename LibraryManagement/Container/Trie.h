@@ -10,7 +10,7 @@ template <typename T> class Trie{
     private:
 		struct Node {
 			T* obj;
-			int next[26];
+			int next[126];
 			bool isLeaf;
 
 			Node() {
@@ -36,7 +36,7 @@ template <typename T> void Trie<T>::insert(const string& s, T* obj){
     int cur = 0;
     for(int i = 0 ; i < s.size() ; ++i) {
 		if (s[i] == ' ') continue;
-        int j = s[i] - 'A';
+        int j = s[i];
         if (Tree[cur].next[j] == -1){
             Tree.push_back(Node());
             Tree[cur].next[j] = Tree.size() - 1;
@@ -52,7 +52,7 @@ template <typename T> vector<T*> Trie<T>::query(const string &s){
     int cur = 0;
     for(int i = 0 ; i < s.size() ; ++i){
 		if (s[i] == ' ') continue;
-        int j = s[i] - 'A';
+        int j = s[i];
         if (Tree[cur].next[j] == -1) return ans;
         cur = Tree[cur].next[j];
     }
@@ -63,7 +63,7 @@ template <typename T> vector<T*> Trie<T>::query(const string &s){
         int u = q.front(); q.pop_front();
         if (Tree[u].isLeaf) ans.push_back(Tree[u].obj);
 
-        for(int i = 0 ; i < 26 ; ++i)
+        for(int i = 0 ; i < 126 ; ++i)
             if (Tree[u].next[i] != -1)
                 q.push_back(Tree[u].next[i]);
     }

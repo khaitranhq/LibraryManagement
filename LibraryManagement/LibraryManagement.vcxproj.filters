@@ -65,5 +65,8 @@
     <ClInclude Include="Database\DatabaseConnect.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
+    <ClInclude Include="Container\TrieNumber.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

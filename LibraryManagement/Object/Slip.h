@@ -21,6 +21,7 @@ class Slip
 		int getUserID();
 		int getNumberItems();
 
+		vector<ItemDetail* > getItems();
 		vector<int> getBooksID();
 		vector<Book*> getBookNotReturned();
 
@@ -37,6 +38,10 @@ void Slip::addItem(ItemDetail* item){ items.push_back(item); }
 int Slip::getSlipID() { return this->slipID; }
 int Slip::getUserID() { return this -> userID; }
 int Slip::getNumberItems() { return (int) items.size(); }
+
+vector<ItemDetail*> Slip::getItems() {
+	return this->items;
+}
 
 vector<int> Slip::getBooksID() {
 	vector<int> ans;

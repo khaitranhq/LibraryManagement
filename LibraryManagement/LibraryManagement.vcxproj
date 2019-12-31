@@ -157,6 +157,7 @@
     <ClInclude Include="Container\Date.h" />
     <ClInclude Include="Container\Queue.h" />
     <ClInclude Include="Container\Trie.h" />
+    <ClInclude Include="Container\TrieNumber.h" />
     <ClInclude Include="Container\Vector.h" />
     <ClInclude Include="Database\DatabaseConnect.h" />
     <ClInclude Include="Functions\Functions.h" />
