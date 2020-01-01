@@ -315,6 +315,7 @@ int main()
 			cout << "So luong sach ban muon muon: " << endl;
 			cin >> numBook;
 			Slip* slip = new Slip(slipID, student->getID(), numBook);
+			cin.ignore();
 			for (int i = 1; i <= numBook; ++i)
 			{
 				string nameBook;
@@ -322,7 +323,6 @@ int main()
 				cout << "Nhap ten cuon sach " << i << ": ";
 				while (1)
 				{
-					cin.ignore();
 					getline(cin, nameBook);
 
 					book = bookTree.query(toUpper(nameBook));
