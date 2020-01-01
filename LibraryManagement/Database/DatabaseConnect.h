@@ -61,9 +61,9 @@ class DatabaseConnect
 		void show_error(unsigned int handletype, const SQLHANDLE &handle);
 
 		void insert(Slip slip);
-		void update_slip_detail(ItemDetail& itemDetail);
+		void update_slip_detail(ItemDetail itemDetail);
 		void add_Student(Student student);
-		void delete_Student(string& tel);
+		void delete_Student(string tel);
 		void close();
 };
 
@@ -314,41 +314,43 @@ void DatabaseConnect::insert(Slip slip)
 		int choice;
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
 		close();
-	} else
+	}
+	else
 	{
+		SQLCloseCursor(sqlStmtHandle);
 		vector<int> booksID = slip.getBooksID();
-		for (int i = 0; i < booksID.size() ; i++)
+		for (int i = 0; i < booksID.size(); i++)
 		{
-			string str1 = " EXEC add_Slip_Detail @SlipID = " + to_string(slip.getSlipID()) + ",@BookID=" + to_string(booksID[i]);
+			string str1 = "EXEC add_Slip_Detail @SlipID = " + to_string(slip.getSlipID()) + ",@BookID=" + to_string(booksID[i]);
 			wstring b = s2ws(str1);
 			LPCWSTR result1 = b.c_str();
-			if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result1, SQL_NTS))
+			if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result1, SQL_NTS)) {
 				show_error(SQL_HANDLE_STMT, sqlStmtHandle);
+				close();
+			}
 			cout << " Them hoa don thanh cong " << endl;
+			SQLCloseCursor(sqlStmtHandle);
 		}
 	}
-	SQLCloseCursor(sqlStmtHandle);
 }
 
-void DatabaseConnect::update_slip_detail(ItemDetail& itemDetail) {
+void DatabaseConnect::update_slip_detail(ItemDetail itemDetail) {
 	//EXEC update_slip_detail @SlipID =30002 , @BookID = 102;
 	string str = "EXEC update_slip_detail @SlipID = " + to_string(itemDetail.getSlipID()) + ", @BookID =" + to_string(itemDetail.getBookID());
 	wstring a = s2ws(str);
 	LPCWSTR result = a.c_str();
+	SQLCloseCursor(sqlStmtHandle);
 	if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)result, SQL_NTS))
 	{
-		//cout << " Error SQL Querry";
+		cout << " Error SQL Querry";
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
-		goto here4;
+		close();
 	}
 	else
 	{
 		cout << " Update phieu muon thanh cong" << endl;
 	}
-here4: {
 	SQLCloseCursor(sqlStmtHandle);
-	return;
-	}
 }
 
 void DatabaseConnect::add_Student(Student student) {
@@ -360,19 +362,16 @@ void DatabaseConnect::add_Student(Student student) {
 	{
 		//cout << " Error SQL Querry";
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
-		goto here4;
+		close();
 	}
 	else
 	{
 		cout << "them hoc sinh thanh cong" << endl;
 	}
-here4: {
 	SQLCloseCursor(sqlStmtHandle);
-	return;
-	}
 }
 
-void DatabaseConnect::delete_Student(string& tel) {
+void DatabaseConnect::delete_Student(string tel) {
 	string str = " DELETE FROM dbo.Students WHERE Tel='" + tel + "';";
 	wstring a = s2ws(str);
 	LPCWSTR result = a.c_str();
@@ -380,16 +379,13 @@ void DatabaseConnect::delete_Student(string& tel) {
 	{
 		//cout << " Error SQL Querry";
 		show_error(SQL_HANDLE_STMT, sqlStmtHandle);
-		goto here4;
+		close();
 	}
 	else
 	{
 		cout << "xoa hoc sinh thanh cong" << endl;
 	}
-here4: {
 	SQLCloseCursor(sqlStmtHandle);
-	return;
-	}
 }
 
 void DatabaseConnect::close()

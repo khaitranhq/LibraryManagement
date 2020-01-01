@@ -53,7 +53,7 @@ vector<int> Slip::getBooksID() {
 vector<Book*> Slip::getBookNotReturned() {
 	vector<Book*> ans;
 	for (int i = 0; i < items.size(); ++i)
-		if (items[i]->isReturned())
+		if (!items[i]->isReturned())
 			ans.push_back(items[i]->getBook());
 	return ans;
 }

@@ -18,6 +18,8 @@
 
 #define left asdfasdfa
 #define right asdfav
+
+#define debug(x) cout << #x << " = " << x << endl;
 using namespace std;
 
 const int MAX = 1e6 + 5;
@@ -52,7 +54,7 @@ void show_menu()
 {
 	cout << " 1. Tim thong tin theo sach " << endl;
 	cout << " 2. Tim thong tin sach theo danh muc " << endl;
-	cout << " 3. Nhap vao ten nguoi dung , hien thi ra cac sach nguoi do chua tra " << endl;
+	cout << " 3. Nhap vao so dien thoai nguoi dung , hien thi ra cac sach nguoi do chua tra " << endl;
 	cout << " 4. Them hoa don " << endl;
 	cout << " 5. Tra sach " << endl;
 	cout << " 6. Them sinh vien " << endl;
@@ -169,6 +171,26 @@ vector<Book *> getBookNotReturn(Student *student)
 	return ans;
 }
 
+void freeMemory() {
+	for(int i = 0 ; i < books.size(); ++i)
+		delete books[i];
+	for (int i = 0; i < categories.size(); ++i)
+		delete categories[i];
+
+	for (int i = 0; i < students.size(); ++i)
+		delete students[i];
+
+	for (int i = 0; i < slips.size(); ++i) {
+		vector<ItemDetail*> items = slips[i]->getItems();
+		for(int j = 0 ; j < items.size(); ++j) 
+			if (items[j] != NULL) {
+				delete items[j];
+				items[j] = NULL;
+			}
+		delete slips[i];
+	}
+}
+
 int main()
 {
 	categories = DB.getCategory();
@@ -182,251 +204,255 @@ int main()
 	InitSlip();
 
 	int question;
-	show_menu();
-	cin >> question;
-	if (question == 1)
-	{
-		string name;
-		cout << "Nhap ten sach: " << endl;
+	while (1) {
+		show_menu();
+		cin >> question;
 
-		cin.ignore();
-		getline(cin, name);
-		vector<Book *> ans = bookTree.query(toUpper(name));
-
-		if (ans.size() == 0)
-			cout << "Cuon sach khong co trong thu vien!!" << endl;
-		else
+		if (question == 1)
 		{
-			cout << "Cac sach tim duoc theo ten: " << endl;
-			for (int i = 0; i < ans.size(); ++i)
-				cout << *ans[i] << endl;
-		}
-	}
-	if (question == 2)
-	{
-		string name;
-		cout << "Nhap ten danh muc: " << endl;
-		cin.ignore();
-		getline(cin, name);
-		vector<Category *> ansCategory = categoryTree.query(toUpper(name));
+			string name;
+			cout << "Nhap ten sach: " << endl;
 
-		if (ansCategory.size() == 0)
-			cout << "Danh muc khong co trong thu vien!!" << endl;
-		else
-		{
-			cout << "Cac sach co trong danh muc: " << endl;
-			for (int i = 0; i < ansCategory.size(); ++i)
+			cin.ignore();
+			getline(cin, name);
+			vector<Book*> ans = bookTree.query(toUpper(name));
+
+			if (ans.size() == 0)
+				cout << "Cuon sach khong co trong thu vien!!" << endl;
+			else
 			{
-				vector<Book *> ansBook = ansCategory[i]->getBooks();
-				if (ansBook.size() == 0)
-					cout << "Khong co sach trong danh muc!!!" << endl;
-				else
-					for (int j = 0; j < ansBook.size(); ++j)
-						cout << *ansBook[j] << endl;
+				cout << "Cac sach tim duoc theo ten: " << endl;
+				for (int i = 0; i < ans.size(); ++i)
+					cout << *ans[i] << endl;
 			}
 		}
-	}
-	if (question == 3)
-	{
-		//continue;
-		string phoneNumber;
-		Student *student;
-
-		cout << "Moi ban nhap so dien thoai: " << endl;
-
-		cin.ignore();
-		while (1)
+		if (question == 2)
 		{
-			cin >> phoneNumber;
-			student = studentTree.query(phoneNumber);
+			string name;
+			cout << "Nhap ten danh muc: " << endl;
+			cin.ignore();
+			getline(cin, name);
+			vector<Category*> ansCategory = categoryTree.query(toUpper(name));
 
-			if (student == NULL)
+			if (ansCategory.size() == 0)
+				cout << "Danh muc khong co trong thu vien!!" << endl;
+			else
 			{
-				cout << "Sai so dien thoai, moi ban nhap lai" << endl;
-				continue;
+				cout << "Cac sach co trong danh muc: " << endl;
+				for (int i = 0; i < ansCategory.size(); ++i)
+				{
+					vector<Book*> ansBook = ansCategory[i]->getBooks();
+					if (ansBook.size() == 0)
+						cout << "Khong co sach trong danh muc!!!" << endl;
+					else
+						for (int j = 0; j < ansBook.size(); ++j)
+							cout << *ansBook[j] << endl;
+				}
 			}
-			break;
 		}
-		cout << phoneNumber << endl;
-		vector<Book *> bookNotReturn = getBookNotReturn(student);
-		if (!bookNotReturn.size())
-			cout << "Ban khong muon cuon sach nao!" << endl;
-		else
+		if (question == 3)
 		{
-			cout << "Cac sach ban muon: " << endl;
-			for (int i = 0; i < bookNotReturn.size(); ++i)
-				cout << *bookNotReturn[i] << endl;
-		}
-	}
-	if (question == 4)
-	{
-		int slipID = slips.back()->getSlipID() + 1;
-		string phoneNumber;
-		Student *student;
+			//continue;
+			string phoneNumber;
+			Student* student;
 
-		cout << "Nhap so dien thoai cua ban: " << endl;
-		cin.ignore();
+			cout << "Moi ban nhap so dien thoai: " << endl;
 
-		while (1)
-		{
-			cin >> phoneNumber;
-
-			if (!checkNumber(phoneNumber))
-			{
-				cout << "So dien thoai khong hop le!" << endl;
-				cout << "Moi nhap lai" << endl;
-				continue;
-			}
-
-			student = studentTree.query(phoneNumber);
-			if (student == NULL)
-			{
-				cout << "Khong ton tai so dien thoai" << endl;
-				continue;
-			}
-			break;
-		}
-
-		int numBook;
-		cout << "So luong sach ban muon muon: " << endl;
-		cin >> numBook;
-		Slip *slip = new Slip(slipID, student->getID(), numBook);
-		for (int i = 1; i <= numBook; ++i)
-		{
-			string nameBook;
-			vector<Book *> book;
-			cout << "Nhap ten cuon sach " << i << ": ";
+			cin.ignore();
 			while (1)
 			{
-				cin.ignore();
-				getline(cin, nameBook);
+				cin >> phoneNumber;
+				student = studentTree.query(phoneNumber);
 
-				book = bookTree.query(toUpper(nameBook));
-				if (book.size() != 1)
+				if (student == NULL)
 				{
-					cout << "Moi ban nhap lai ten chinh xac cua sach" << endl;
-					continue;
-				}
-
-				if (!book[0]->getNumCopy())
-				{
-					cout << "Sach ban can tim da het, moi nhap ten cuon sach khac" << endl;
+					cout << "Sai so dien thoai, moi ban nhap lai" << endl;
 					continue;
 				}
 				break;
 			}
-			cout << " Cuon sach co ID la " << book[0]->getID() << endl;
-			ItemDetail *item = new ItemDetail(book[0]->getID());
-			book[0]->decreaseNumcopy();
-			slip->addItem(item);
-		}
-		DB.insert(*slip);
-		slips.push_back(slip);
-	}
-	if (question == 5)
-	{
-		string phoneNumber;
-		cout << " Moi nhap so dien thoai cua ban " << endl;
-		cin >> phoneNumber;
 
-		string bookName;
-		cout << " Moi nhap ten sach ban muon tra " << endl;
-		cin.ignore();
-
-		vector<Book *> ansBook;
-		while (1)
-		{
-			getline(cin, bookName);
-
-			ansBook = bookTree.query(toUpper(bookName));
-			if (ansBook.size() != 1)
+			vector<Book*> bookNotReturn = getBookNotReturn(student);
+			if (!bookNotReturn.size())
+				cout << "Ban khong muon cuon sach nao!" << endl;
+			else
 			{
-				cout << "Nhap sai ten, moi nhap lai" << endl;
-				continue;
+				cout << "Cac sach ban muon: " << endl;
+				for (int i = 0; i < bookNotReturn.size(); ++i)
+					cout << *bookNotReturn[i] << endl;
 			}
-			break;
 		}
-
-		int bookID = ansBook[0]->getID();
-
-		Student *student = studentTree.query(phoneNumber);
-		vector<Slip *> ansSlip = student->getSlips();
-
-		for (int i = 0; i < ansSlip.size(); ++i)
+		if (question == 4)
 		{
-			vector<ItemDetail *> ansItems = ansSlip[i]->getItems();
+			int slipID = slips.back()->getSlipID() + 1;
+			string phoneNumber;
+			Student* student;
 
-			bool flag = 0;
-			for (int j = 0; j < ansItems.size(); ++j)
+			cout << "Nhap so dien thoai cua ban: " << endl;
+			cin.ignore();
+
+			while (1)
 			{
-				if (ansItems[j]->getBookID() == ansBook[0]->getID())
-				{
-					int slipID = ansItems[j]->getSlipID();
-					ansItems[j]->setStatus();
-					ansBook[0]->increaseNumcopy();
+				cin >> phoneNumber;
 
-					DB.update_slip_detail(*ansItems[j]);
-					flag = 1;
+				if (!checkNumber(phoneNumber))
+				{
+					cout << "So dien thoai khong hop le!" << endl;
+					cout << "Moi nhap lai" << endl;
+					continue;
+				}
+
+				student = studentTree.query(phoneNumber);
+				if (student == NULL)
+				{
+					cout << "Khong ton tai so dien thoai" << endl;
+					continue;
+				}
+				break;
+			}
+
+			int numBook;
+			cout << "So luong sach ban muon muon: " << endl;
+			cin >> numBook;
+			Slip* slip = new Slip(slipID, student->getID(), numBook);
+			for (int i = 1; i <= numBook; ++i)
+			{
+				string nameBook;
+				vector<Book*> book;
+				cout << "Nhap ten cuon sach " << i << ": ";
+				while (1)
+				{
+					cin.ignore();
+					getline(cin, nameBook);
+
+					book = bookTree.query(toUpper(nameBook));
+					if (book.size() != 1)
+					{
+						cout << "Moi ban nhap lai ten chinh xac cua sach" << endl;
+						continue;
+					}
+
+					if (!book[0]->getNumCopy())
+					{
+						cout << "Sach ban can tim da het, moi nhap ten cuon sach khac" << endl;
+						continue;
+					}
 					break;
 				}
+				cout << " Cuon sach co ID la " << book[0]->getID() << endl;
+				ItemDetail* item = new ItemDetail(book[0], book[0]->getID());
+				book[0]->decreaseNumcopy();
+				slip->addItem(item);
 			}
-			if (flag)
-				break;
+			DB.insert(*slip);
+			slips.push_back(slip);
+			student->addSlip(slip);
 		}
-	}
-	if (question == 6)
-	{
-		int userID = students.back()->getID() + 1;
-		string username, address, phoneNumber;
-		cout << "Nhap ten cua ban: " << endl;
-		cin.ignore();
-		getline(cin, username);
-
-		cout << "Nhap dia chi cua ban" << endl;
-		cin.ignore();
-		getline(cin, address);
-
-		cout << "Nhap so dien thoai" << endl;
-		cin >> phoneNumber;
-
-		Student* student = new Student(userID, username, address, phoneNumber);
-		students.push_back(student);
-		refStudent[userID] = student;
-		studentTree.insert(phoneNumber, student);
-		DB.add_Student(*student);
-	}
-	if (question == 7)
-	{
-		string phoneNumber;
-		Student *student;
-		cout << "Nhap so dien thoai cua ban" << endl;
-
-		while (1)
+		if (question == 5)
 		{
+			string phoneNumber;
+			cout << " Moi nhap so dien thoai cua ban " << endl;
 			cin >> phoneNumber;
-			student = studentTree.query(phoneNumber);
-			if (student == NULL)
-			{
-				cout << "So dien thoai khong dung!" << endl;
-				continue;
-			}
-			break;
-		}
 
-		for (int i = 0; i < students.size(); ++i)
-			if (*student == *students[i])
+			string bookName;
+			cout << " Moi nhap ten sach ban muon tra " << endl;
+			cin.ignore();
+
+			vector<Book*> ansBook;
+			while (1)
 			{
-				students.erase(i);
+				getline(cin, bookName);
+
+				ansBook = bookTree.query(toUpper(bookName));
+				if (ansBook.size() != 1)
+				{
+					cout << "Nhap sai ten, moi nhap lai" << endl;
+					continue;
+				}
 				break;
 			}
-		cout << "So sinh vien: " << students.size() << endl;
-		studentTree.erase(phoneNumber);
-		DB.delete_Student(phoneNumber);
-	}
-	if (question == 8)
-	{
-		cout << question << endl;
+
+			int bookID = ansBook[0]->getID();
+
+			Student* student = studentTree.query(phoneNumber);
+			vector<Slip*> ansSlip = student->getSlips();
+
+			for (int i = 0; i < ansSlip.size(); ++i)
+			{
+				vector<ItemDetail*> ansItems = ansSlip[i]->getItems();
+
+				bool flag = 0;
+				for (int j = 0; j < ansItems.size(); ++j)
+				{
+					if (ansItems[j]->getBookID() == ansBook[0]->getID())
+					{
+						int slipID = ansItems[j]->getSlipID();
+						ansItems[j]->setStatus();
+						ansBook[0]->increaseNumcopy();
+
+						DB.update_slip_detail(*ansItems[j]);
+						flag = 1;
+						break;
+					}
+				}
+				if (flag)
+					break;
+			}
+		}
+		if (question == 6)
+		{
+			int userID = students.back()->getID() + 1;
+			string username, address, phoneNumber;
+			cout << "Nhap ten cua ban: " << endl;
+			cin.ignore();
+			getline(cin, username);
+
+			cout << "Nhap dia chi cua ban" << endl;
+			cin.ignore();
+			getline(cin, address);
+
+			cout << "Nhap so dien thoai" << endl;
+			cin >> phoneNumber;
+
+			Student* student = new Student(userID, username, address, phoneNumber);
+			students.push_back(student);
+			refStudent[userID] = student;
+			studentTree.insert(phoneNumber, student);
+			DB.add_Student(*student);
+		}
+		if (question == 7)
+		{
+			string phoneNumber;
+			Student* student;
+			cout << "Nhap so dien thoai cua ban" << endl;
+
+			while (1)
+			{
+				cin >> phoneNumber;
+				student = studentTree.query(phoneNumber);
+				if (student == NULL)
+				{
+					cout << "So dien thoai khong dung!" << endl;
+					continue;
+				}
+				break;
+			}
+
+			vector<Student*> tmp;
+			for (int i = 0; i < students.size(); ++i) {
+				if (*student == *students[i]) continue;
+				tmp.push_back(students[i]);
+			}
+			students = tmp;
+			cout << "Xoa sinh vien thanh cong" << endl;
+			cout << "So sinh vien: " << students.size() << endl;
+			studentTree.erase(phoneNumber);
+			DB.delete_Student(phoneNumber);
+		}
+		if (question == 8) break;
 	}
 	cout << "Goodbye" << endl;
+
+	freeMemory();
 	return 0;
 }

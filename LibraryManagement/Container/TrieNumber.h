@@ -36,7 +36,7 @@ template <typename T> TrieNumber<T>::TrieNumber() {
 
 template <typename T> void TrieNumber<T>::insert(const string& s, T* obj) {
 	int cur = 0;
-	for (int i = 0; i < s.size(); ++i) {
+	for (int i = 0; i < 9; ++i) {
 		if (s[i] == ' ') continue;
 		int j = s[i] - '0';
 		if (Tree[cur].next[j] == -1) {
@@ -51,7 +51,7 @@ template <typename T> void TrieNumber<T>::insert(const string& s, T* obj) {
 
 template <typename T> T* TrieNumber<T>::query(const string& s) {
 	int cur = 0;
-	for (int i = 0; i < s.size() - 1; ++i) {
+	for (int i = 0; i < 9; ++i) {
 		if (s[i] == ' ') continue;
 		int j = s[i] - '0';
 		if (Tree[cur].next[j] == -1) return NULL;
@@ -63,7 +63,7 @@ template <typename T> T* TrieNumber<T>::query(const string& s) {
 template <typename T> void TrieNumber<T>::erase(const string& s) {
 	int cur = 0;
 	vector<int> stack;
-	for (int i = 0; i < s.size() - 1; ++i) {
+	for (int i = 0; i < 9; ++i) {
 		int j = s[i] - '0';
 		stack.push_back(Tree[cur].next[j]);
 		cur = stack.back();

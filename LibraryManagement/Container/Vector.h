@@ -1,200 +1,253 @@
 #pragma once
 
-
-//using namespace std;
-
-template <class T>
-class  vector
+template<typename Ty>
+class vector
 {
 public:
-
-	typedef T* iterator;
+	using iterator = Ty*;
+	using const_iterator = const Ty*;
 
 	vector();
-	vector(unsigned int size);
-	vector(unsigned int size, const T& initial);
-	vector(const vector<T>& v);
+	explicit vector(const size_t count);
+	vector(const size_t count, const Ty& val);
+	vector(const vector& other);
+	vector(vector&& other);
 	~vector();
 
-	unsigned int capacity() const;
-	unsigned int size() const;
-	bool empty() const;
-	iterator begin();
-	iterator end();
-	T& front();
-	T& back();
-	void push_back(const T& value);
+	vector& operator=(const vector& other);
+	vector& operator=(vector&& other);
+
+	size_t size() const;
+	size_t capacity() const;
+
+	void push_back(const Ty& val);
+	void push_back(Ty&& val);
 	void pop_back();
+	void erase(const int&);
 
-	void reserve(unsigned int capacity); 
-	void resize(unsigned int size);
+	Ty& front();
+	const Ty& front() const;
+	Ty& back();
+	const Ty& back() const;
+	Ty& operator[](const size_t pos);
+	const Ty& operator[](const size_t pos) const;
 
-	void erase(const int& index);
-
-	T& operator[](unsigned int index);
-	vector<T>& operator=(const vector<T>&);
-
-	void clear();
+	iterator begin();
+	const_iterator begin() const;
+	iterator end();
+	const_iterator end() const;
 private:
-	unsigned int my_size;
-	unsigned int my_capacity;
-	T* buffer;
+	Ty* buffer;
+	iterator m_first;
+	iterator m_last;
+	iterator m_end;
+
+	void realloc(const size_t factor, const size_t carry);
+	void alloc(const size_t cap);
 };
 
-// Your code goes here ...
-template<class T>
-vector<T>::vector()
-{
-	my_capacity = 0;
-	my_size = 0;
-	buffer = 0;
+template<typename Ty>
+vector<Ty>::vector() : buffer(new Ty[10]), m_first(buffer), m_last(buffer), m_end(buffer + 10) {
+
 }
 
-template<class T>
-vector<T>::vector(const vector<T>& v)
-{
-	my_size = v.my_size;
-	my_capacity = v.my_capacity;
-	buffer = new T[my_size];
-	for (unsigned int i = 0; i < my_size; i++)
-		buffer[i] = v.buffer[i];
+template<typename Ty>
+vector<Ty>::vector(const size_t count) : buffer(new Ty[count]), m_first(buffer), m_last(buffer + count), m_end(buffer + count) {
+
 }
 
-template<class T>
-vector<T>::vector(unsigned int size)
-{
-	my_capacity = size;
-	my_size = size;
-	buffer = new T[size];
+template<typename Ty>
+vector<Ty>::vector(const size_t count, const Ty& val) : buffer(new Ty[count]), m_first(buffer), m_last(buffer + count), m_end(buffer + count) {
+	int cnt = count;
+	while (cnt--) {
+		buffer[cnt] = val;
+	}
 }
 
-template<class T>
-vector<T>::vector(unsigned int size, const T& initial)
-{
-	my_size = size;
-	my_capacity = size;
-	buffer = new T[size];
-	for (unsigned int i = 0; i < size; i++)
-		buffer[i] = initial;
-	//T();
+template<typename Ty>
+vector<Ty>::vector(const vector& other) : buffer(new Ty[other.capacity()]), m_first(buffer), m_last(buffer + other.size()), m_end(buffer + other.capacity()) {
+	for (size_t i = 0; i < size(); ++i) {
+		buffer[i] = other[i];
+	}
 }
 
-template<class T>
-vector<T>& vector<T>::operator = (const vector<T>& v)
-{
-	delete[] buffer;
-	my_size = v.my_size;
-	my_capacity = v.my_capacity;
-	buffer = new T[my_size];
-	for (unsigned int i = 0; i < my_size; i++)
-		buffer[i] = v.buffer[i];
+template<typename Ty>
+vector<Ty>::vector(vector&& other) : buffer(other.buffer), m_first(other.m_first), m_last(other.m_last), m_end(other.m_end) {
+	other.buffer = nullptr;
+	other.m_first = other.m_last = other.m_end = nullptr;
+}
+
+template<typename Ty>
+vector<Ty>::~vector() {
+	if (buffer != nullptr) {
+		m_first = m_last = m_end = nullptr;
+		delete[] buffer;
+	}
+}
+
+template<typename Ty>
+vector<Ty>& vector<Ty>::operator=(const vector<Ty>& other) {
+	if (this == &other) {
+		return *this;
+	}
+	this->~vector();
+	buffer = new Ty[other.capacity()];
+	m_first = buffer;
+	m_last = buffer + other.size();
+	m_end = buffer + other.capacity();
+	for (size_t i = 0; i < size(); ++i) {
+		buffer[i] = other[i];
+	}
 	return *this;
 }
 
-template<class T>
-typename vector<T>::iterator vector<T>::begin()
-{
-	return buffer; 
-}
-
-template<class T>
-typename vector<T>::iterator vector<T>::end()
-{
-	return buffer + size();
-}
-
-template<class T>
-T& vector<T>::front()
-{
-	return buffer[0];
-}
-
-template<class T>
-T& vector<T>::back()
-{
-	return buffer[my_size - 1];
-}
-
-template<class T>
-void vector<T>::push_back(const T& v)
-{
-	if (my_size >= my_capacity)
-		reserve(my_capacity + 5);
-	buffer[my_size++] = v;
-}
-
-template<class T>
-void vector<T>::pop_back()
-{
-	my_size--;
-}
-
-template<class T>
-void vector<T>::reserve(unsigned int capacity)
-{
-	if (buffer == 0)
-	{
-		my_size = 0;
-		my_capacity = 0;
+template<typename Ty>
+vector<Ty>& vector<Ty>::operator=(vector<Ty>&& other) {
+	if (this == &other) {
+		return *this;
 	}
-	T* Newbuffer = new T[capacity];
-	//assert(Newbuffer);
-	unsigned int l_Size = capacity < my_size ? capacity : my_size;
-	//copy (buffer, buffer + l_Size, Newbuffer);
+	this->~vector();
 
-	for (unsigned int i = 0; i < l_Size; i++)
-		Newbuffer[i] = buffer[i];
+	buffer = other.buffer;
+	m_first = other.m_first;
+	m_last = other.m_last;
+	m_end = other.m_end;
 
-	my_capacity = capacity;
-	delete[] buffer;
-	buffer = Newbuffer;
+	other.buffer = nullptr;
+	other.m_first = other.m_last = other.m_end = nullptr;
+	return *this;
 }
 
-template<class T>
-unsigned int vector<T>::size()const//
-{
-	return my_size;
+template<typename Ty>
+size_t vector<Ty>::size() const {
+	return static_cast<size_t>(m_last - m_first);
 }
 
-template<class T>
-void vector<T>::resize(unsigned int size)
-{
-	reserve(size);
-	my_size = size;
+template<typename Ty>
+size_t vector<Ty>::capacity() const {
+	return static_cast<size_t>(m_end - m_first);
 }
 
-template<class T>
-T& vector<T>::operator[](unsigned int index)
-{
-	return buffer[index];
+template<typename Ty>
+void vector<Ty>::push_back(const Ty& val) {
+	if (size() < capacity()) {
+		*(m_last++) = val;
+		return;
+	}
+	realloc(2, 2);
+	*(m_last++) = val;
 }
 
-template<class T>
-unsigned int vector<T>::capacity()const
-{
-	return my_capacity;
+template<typename Ty>
+void vector<Ty>::push_back(Ty&& val) {
+	if (size() < capacity()) {
+		*(m_last++) = std::move(val);
+		return;
+	}
+	realloc(2, 2);
+	*(m_last++) = std::move(val);
 }
 
-template<class T>
-void vector<T>::erase(const int& index) {
-	vector<T> ans;
-	for (int i = 0; i < my_size; ++i)
-		if (i != index)
-			ans.push_back(buffer[i]);
-	delete[] buffer;
-	buffer = ans.buffer;
-	--my_size;
+template<typename Ty>
+void vector<Ty>::pop_back() {
+	if (size() == 0) {
+		throw std::exception("vector is empty");
+	}
+	(--m_last)->~Ty();
 }
 
-template<class T>
-vector<T>::~vector()
-{
-	delete[] buffer;
+template<typename Ty>
+void vector<Ty>::erase(const int& index) {
+	size_t sz = size();
+	for (size_t i = index; i < sz; ++i) {
+		buffer[i] = buffer[i + 1];
+	}
+	--m_last;
 }
-template <class T>
-void vector<T>::clear()
-{
-	my_capacity = 0;
-	my_size = 0;
-	buffer = 0;
+
+template<typename Ty>
+Ty& vector<Ty>::front() {
+	if (size() == 0) {
+		throw std::exception("front(): vector is empty");
+	}
+	return *begin();
+}
+
+template<typename Ty>
+const Ty& vector<Ty>::front() const {
+	if (size() == 0) {
+		throw std::exception("front(): vector is empty");
+	}
+	return *begin();
+}
+
+template<typename Ty>
+Ty& vector<Ty>::back() {
+	if (size() == 0) {
+		throw std::exception("back(): vector is empty");
+	}
+	return *(end() - 1);
+}
+
+template<typename Ty>
+const Ty& vector<Ty>::back() const {
+	if (size() == 0) {
+		throw std::exception("back(): vector is empty");
+	}
+	return *(end() - 1);
+}
+
+template<typename Ty>
+Ty& vector<Ty>::operator[](const size_t pos) {
+	if (pos >= size()) {
+		throw std::exception("index out of range");
+	}
+	return buffer[pos];
+}
+
+template<typename Ty>
+const Ty& vector<Ty>::operator[](const size_t pos) const {
+	if (pos >= size()) {
+		throw std::exception("index out of range");
+	}
+	return buffer[pos];
+}
+
+template<typename Ty>
+typename vector<Ty>::iterator vector<Ty>::begin() {
+	return m_first;
+}
+
+template<typename Ty>
+typename vector<Ty>::iterator vector<Ty>::end() {
+	return m_last;
+}
+
+template<typename Ty>
+typename vector<Ty>::const_iterator vector<Ty>::begin() const {
+	return m_first;
+}
+
+template<typename Ty>
+typename vector<Ty>::const_iterator vector<Ty>::end() const {
+	return m_last;
+}
+
+template<typename Ty>
+void vector<Ty>::realloc(const size_t factor, const size_t carry) {
+	alloc(capacity() * factor + carry);
+}
+
+template<typename Ty>
+void vector<Ty>::alloc(const size_t cap) {
+	Ty* new_buffer = new Ty[cap];
+	size_t sz = size();
+	for (size_t i = 0; i < sz; ++i) {
+		new_buffer[i] = buffer[i];
+	}
+	this->~vector();
+	buffer = new_buffer;
+	m_first = buffer;
+	m_last = buffer + sz;
+	m_end = buffer + cap;
 }

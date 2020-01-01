@@ -1,1 +1,32 @@
-﻿  LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe
+﻿  LibraryManagement.cpp
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Database\DatabaseConnect.h(314,7): warning C4101: 'choice': unreferenced local variable
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(25,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(170,29): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(42,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message : while compiling class template member function 'void Trie<Book>::insert(const std::string &,T *)'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :             T=Book
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\Trie.h(35): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(69): message : see reference to function template instantiation 'void Trie<Book>::insert(const std::string &,T *)' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(69): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(69): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(69): message :             T=Book
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(69): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(37): message : see reference to class template instantiation 'Trie<Book>' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(44,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(37): message : while compiling class template member function 'void TrieNumber<Student>::insert(const std::string &,T *)'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(37): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(37): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(37): message :             T=Student
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(37): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(96): message : see reference to function template instantiation 'void TrieNumber<Student>::insert(const std::string &,T *)' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(96): message :         with
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(96): message :         [
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(96): message :             T=Student
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(96): message :         ]
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(39): message : see reference to class template instantiation 'TrieNumber<Student>' being compiled
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(72,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\Container\TrieNumber.h(63): message : while compiling class template member function 'void TrieNumber<Student>::erase(const std::string &)'
+C:\Users\Leo\Documents\GitHub\LibraryManagement\LibraryManagement\LibraryManagement.cpp(449): message : see reference to function template instantiation 'void TrieNumber<Student>::erase(const std::string &)' being compiled
+  LibraryManagement.vcxproj -> C:\Users\Leo\Documents\GitHub\LibraryManagement\x64\Debug\LibraryManagement.exe

@@ -14,7 +14,7 @@ class ItemDetail {
 	public:
 		ItemDetail(Book* book, bool status, Date dateBorrow, Date dateReturn);
 		ItemDetail(int slipID, int bookID, bool status, Date dateBorrow, Date dateReturn);
-		ItemDetail(int bookID);
+		ItemDetail(Book* book, int bookID);
 
 		bool isReturned(){ return status; }
 		void setBook(Book* book);
@@ -38,8 +38,10 @@ ItemDetail::ItemDetail(int slipID, int bookID, bool status, Date dateBorrow, Dat
 	slipID(slipID), bookID(bookID), status(status), dateBorrow(dateBorrow), dateReturn(dateReturn)
 {}
 
-ItemDetail::ItemDetail(int bookID): bookID(bookID)
-{}
+ItemDetail::ItemDetail(Book* book, int bookID): bookID(bookID), book(book)
+{
+	this->status = 0;
+}
 
 void ItemDetail::setBook(Book* book) { this->book = book; }
 int ItemDetail::getBookID() { return bookID; }
